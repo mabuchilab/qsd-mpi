@@ -1,0 +1,20 @@
+onespin.cc:  One spin, one or more trajectories, very detailed comments.
+
+template.cc: Uses many features, may serve as a template.
+
+testprog.cc: Test program; identical to template.cc except that it uses a
+             simple portable random-number generator.
+
+simple.cc:   Simple harmonic oscillator, one trajectory.
+
+moving.cc:   Simple harmonic oscillator, using the moving basis, one 
+             trajectory.
+             Different unravelings can be chosen by uncommenting or
+             commenting out the appropriate lines.
+
+spins.cc:    Two interacting spins, time-dependent Hamiltonian, one 
+             trajectory.
+
+sums.cc:     Simple harmonic oscillator, sum over trajectories.
+
+

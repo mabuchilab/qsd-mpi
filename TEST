@@ -1,0 +1,22 @@
+To test that the program has been correctly installed and runs properly, 
+type the following two commands:
+
+	make testprog
+	./testprog
+
+You should get the following output on the screen:
+
+0 0 0 0 0 5000 0
+1 0.0123545 0.0122008 -5.6931 -0.176767 60 125
+2 0.0470433 0.044747 -6.48999 -0.405677 108 100
+3 0.0557859 0.0476779 -6.31773 -0.384878 108 139
+4 0.0288682 0.0509962 -6.29138 -0.330744 90 147
+5 0.0435576 -0.0129101 -5.74368 -0.311534 70 169
+
+Furthermore, the output files 
+
+X1.out, X2.out, A2.out
+
+should be identical to the files in the directory `./example_output/testprog/'.
+
+This program has been tested under GNU g++ Version 3.2.

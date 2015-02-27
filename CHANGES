@@ -1,0 +1,87 @@
+Changes in version 1.3.5:
+
+1. Removed obsolete compiler options from Complex.cc.
+
+2. Fixed a minor bug in Complex.cc.
+
+3. Fixed a minor bug in State.cc.
+
+4. Fixed a minor bug in ACG.cc
+
+-----------------------------------------------------------------------------
+
+Changes in version 1.3.4:
+
+1.) Fixed minor bug in Makefile.
+
+2.) Improved instructions in README.
+
+-----------------------------------------------------------------------------
+
+Additions in version 1.3.3:
+
+1.) New example program `onespin.cc'; improved comments in the existing
+example programs.
+
+2.) The directory `doc' contains, in LaTeX as well as postscript
+format, a detailed description of the code, which has been published
+in Comp. Phys. Comm. 102 (1997) 210-228.
+
+-----------------------------------------------------------------------------
+
+Major differences between versions 1.2 and 1.3:
+
+1.) The test program `testprog.cc' now uses a simple
+platform-independent random-number generator. The results produced by
+`testprog.cc' should now be the same for all operating systems and C++
+dialects.
+
+2.) The directory `example_output' contains the output of all example
+programs.  The output was obtained using Gnu g++ Version 2.7.2 on a
+DEC Alpha under Digital UNIX. Different compilers or operating systems
+may produce different results except for `testprog.cc' (see above).
+
+3.) We added the example program `template.cc'.
+
+4.) The method `Trajectory::plotExp' now allows one to specify a file
+into which the final state is saved.
+
+5.) The method `Trajectory::sumExp' now computes the imaginary as well
+as the real parts of operator expectation values.
+
+6.) `Makefile' is now be compatible with standard (nonGnu) versions of
+`make'.
+
+-----------------------------------------------------------------------------
+
+Major differences between versions 1.1 and 1.2:
+
+1.) The quantum jump and orthogonal jump unravelings have been added
+via the "stepper" classes `AdaptiveJump' and `AdaptiveOrthoJump'.
+The example program `moving.cc' illustrates how to use `AdaptiveJump'.
+
+2.) A bug involving a wrong nested loop in `sumExp' has been fixed.
+
+-----------------------------------------------------------------------------
+
+Here is a list of major differences between versions 1.0 and 1.1:
+
+1.) The third argument of the function `plotExp' is now a list of file
+names, not a list of file pointers as before. The old version of
+`plotExp' has been renamed to `plotExp_obsolete'. The example programs 
+`simple.cc', `spins.cc', and `moving.cc' show how to use `plotExp'.
+
+2.) A new function named `sumExp' permits to compute the mean of
+expectation values over many trajectories. The example program
+`sums.cc' illustrates how to use 'sumExp'.
+
+3.) The program now compiles and runs under VMS using DEC C++.
+
+4.) A quantum jump stepper has been added, but detailed comments will
+not be available before version 1.2.
+
+5.) The files `src/AtomOp.cc' and `include/AtomOp.h' define the new
+primary operator class `TransitionOperator'.
+
+6.) A test program has been added to enable users to check correct
+installation. See the file `TEST' for details.
