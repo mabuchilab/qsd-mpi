@@ -18,7 +18,7 @@ public:
   int getN();
   double getDelta();
 
-  double dotproduct(double *c, double *c);
+  double dotproduct(double *, double *);
   double x(int ix, int iy);
   double y(int ix, int iy);
 

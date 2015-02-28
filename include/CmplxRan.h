@@ -34,7 +34,7 @@
 #ifndef _CmplxRan_hhh
 #define _CmplxRan_hhh
 
-#include <stdlib.h>
+#include <cstdlib>
 #include "Complex.h"
 #include "RNG.h"
 

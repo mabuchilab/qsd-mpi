@@ -31,9 +31,9 @@
 //   Egham, Surrey TW20 0EX, UK
 /////////////////////////////////////////////////////////////////////////////
 
-#include <iostream.h>
+#include <iostream>
 #include <math.h>
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "State.h"
 #include "PrimOp.h"
@@ -74,7 +74,7 @@ static void setIntSqrtMax(int maximum)
 
 //  I/O operators for enum FreedomType; necessary of I/O of States
 
-ostream& operator<<( ostream& s, FreedomType theType )
+std::ostream& operator<<( std::ostream& s, FreedomType theType )
 //
 // Output a FreedomType to an output stream
 {
@@ -92,13 +92,13 @@ ostream& operator<<( ostream& s, FreedomType theType )
       s << 3;
       break;
     default:
-      cerr << "Unknown FreedomType outputted in <<!" << endl;
+      std::cerr << "Unknown FreedomType outputted in <<!" << std::endl;
       exit(1);
   }
   return s;
 }
 
-istream& operator>>( istream& s, FreedomType& theType )
+std::istream& operator>>( std::istream& s, FreedomType& theType )
 //
 // Input a FreedomType from an input stream
 {
@@ -119,7 +119,7 @@ istream& operator>>( istream& s, FreedomType& theType )
       theType = ATOM;
       break;
     default:
-      cerr << "Unknown FreedomType inputted in >>!" << endl;
+      std::cerr << "Unknown FreedomType inputted in >>!" << std::endl;
       exit(1);
   }
   return s;
@@ -736,7 +736,7 @@ void State::adjustCutoff(int theFreedom, double epsilon, int padSize)
       sum += norm(data[--i]);		// add up probability
     i += (padSize + 1);
     if( i > totalDim ) {		// enough states allocated?
-      cerr << "Warning!  Significant probability in top states!" << endl;
+      std::cerr << "Warning!  Significant probability in top states!" << std::endl;
       i = totalDim;
     }
     if( i > maxSize )				// stretch # of states;
@@ -757,8 +757,8 @@ void State::adjustCutoff(int theFreedom, double epsilon, int padSize)
     }
     k += (padSize + 1);
     if( k > nDims[theFreedom] ) {	// enough states allocated?
-      cerr << "Warning!  Significant probabilty in top states!" << endl;
-      cerr << "k = " << k << endl;
+      std::cerr << "Warning!  Significant probabilty in top states!" << std::endl;
+      std::cerr << "k = " << k << std::endl;
       k = nDims[theFreedom];
     }
     if( k > sizes[theFreedom] ) stretchFreedom(theFreedom,k);
@@ -827,65 +827,65 @@ void State::shrinkFreedom(int theFreedom, int theSize)
 void State::diagnostic()	// for debugging
 {
   int i;
-  cout << "Number of Freedoms " << nFreedoms << ".\n";
-  cout << "Total Dimensions " << totalDim << ".\n";
-  cout << "MaxSize " << maxSize << ".\n";
-  cout << "My Type " << myType << ".\n";
-  cout << "My Size " << mySize << ".\n";
-  cout << "nSkip " << nSkip << ".\n";
-  cout << "coord " << coord << ".\n";
-  cout << "data pointer " << data << ".\n";
-  cout << "My Pointer " << myPointer << ".\n";
-  cout << "Dimensions:\n";
+  std::cout << "Number of Freedoms " << nFreedoms << ".\n";
+  std::cout << "Total Dimensions " << totalDim << ".\n";
+  std::cout << "MaxSize " << maxSize << ".\n";
+  std::cout << "My Type " << myType << ".\n";
+  std::cout << "My Size " << mySize << ".\n";
+  std::cout << "nSkip " << nSkip << ".\n";
+  std::cout << "coord " << coord << ".\n";
+  std::cout << "data pointer " << data << ".\n";
+  std::cout << "My Pointer " << myPointer << ".\n";
+  std::cout << "Dimensions:\n";
   if (nFreedoms > 1 ) {
     for (i=0; i<nFreedoms; i++)
-      cout << "  " << nDims[i] << ".\n";
-    cout << "Sizes:\n";
+      std::cout << "  " << nDims[i] << ".\n";
+    std::cout << "Sizes:\n";
     for (i=0; i<nFreedoms; i++)
-      cout << "  " << sizes[i] << ".\n";
-    cout << "Skips:\n";
+      std::cout << "  " << sizes[i] << ".\n";
+    std::cout << "Skips:\n";
     for (i=0; i<nFreedoms; i++)
-      cout << "  " << nSkips[i] << ".\n";
-    cout << "Partial dimensions:\n";
+      std::cout << "  " << nSkips[i] << ".\n";
+    std::cout << "Partial dimensions:\n";
     for (i=0; i<nFreedoms; i++)
-      cout << "  " << partDims[i] << ".\n";
-    cout << "Centers of coordinates:\n";
+      std::cout << "  " << partDims[i] << ".\n";
+    std::cout << "Centers of coordinates:\n";
     for (i=0; i<nFreedoms; i++)
-      cout << "  " << coords[i] << ".\n";
+      std::cout << "  " << coords[i] << ".\n";
   }
 }
 
 // Friend I/O functions
 
-ostream& operator<<( ostream& s, const State& a )
+std::ostream& operator<<( std::ostream& s, const State& a )
 //
 // Output a State to an output stream
 //
 {
   int i;
 
-  s << a.nFreedoms << endl;
-  s << a.totalDim << endl;
-  s << a.maxSize << endl;
-  s << a.mySize << endl;
-  s << a.nSkip << endl;
-  s << a.coord << endl;
-  s << a.myType << endl;
+  s << a.nFreedoms << std::endl;
+  s << a.totalDim << std::endl;
+  s << a.maxSize << std::endl;
+  s << a.mySize << std::endl;
+  s << a.nSkip << std::endl;
+  s << a.coord << std::endl;
+  s << a.myType << std::endl;
   if( a.nFreedoms > 1 )
     for(i=0; i<a.nFreedoms; i++) {
-      s << a.nDims[i] << endl;
-      s << a.sizes[i] << endl;
-      s << a.nSkips[i] << endl;
-      s << a.partDims[i] << endl;
-      s << a.freedomTypes[i] << endl;
-      s << a.coords[i] << endl;
+      s << a.nDims[i] << std::endl;
+      s << a.sizes[i] << std::endl;
+      s << a.nSkips[i] << std::endl;
+      s << a.partDims[i] << std::endl;
+      s << a.freedomTypes[i] << std::endl;
+      s << a.coords[i] << std::endl;
     }
   for (i=0; i<a.maxSize; i++)
-    s << a.data[i] << endl;
+    s << a.data[i] << std::endl;
   return s;
 }
 
-istream& operator>>( istream& s, State& a )
+std::istream& operator>>( std::istream& s, State& a )
 //
 // Input a State from an input stream
 //
@@ -1246,7 +1246,7 @@ void State::moveStep(Complex& delta, Complex& deltacc)
 
 void State::error(const char* message) const	// error handling
 {
-  cerr << message << "\n";
+  std::cerr << message << "\n";
   exit(1);
 }
 

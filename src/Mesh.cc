@@ -2,9 +2,10 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include <iostream.h>
+#include <iostream>
 #include <math.h>
-#include <stdlib.h>
+#include <cstdlib>
+#include <cstdio>
 
 #include "Complex.h"
 #include "Mesh.h"

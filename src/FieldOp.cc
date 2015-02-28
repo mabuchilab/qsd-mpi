@@ -31,8 +31,8 @@
 //   Egham, Surrey TW20 0EX, UK
 /////////////////////////////////////////////////////////////////////////////
 
-#include <iostream.h>
-#include <stdlib.h>
+#include <iostream>
+#include <cstdlib>
 
 #include "FieldOp.h"
 
@@ -67,7 +67,7 @@ static void computeIntSqrt(int newSize)
 void AnnihilationOperator::applyTo(State& v, int hc, double)
 {
 #ifdef DEBUG_TRACE
-  cout << "AnnihilationOperator::applyTo entered." << endl;
+  std::cout << "AnnihilationOperator::applyTo entered." << endl;
 #endif
   int i;
   Complex center = v.centerCoords();
@@ -113,7 +113,7 @@ void AnnihilationOperator::applyTo(State& v, int hc, double)
 void LocalLower::applyTo(State& v, int hc, double)
 {
 #ifdef DEBUG_TRACE
-  cout << "LocalLower::applyTo entered." << endl;
+  std::cout << "LocalLower::applyTo entered." << endl;
 #endif
   int i;
   int vSize = v.size();
@@ -140,7 +140,7 @@ void NumberOperator::applyTo(State& v, int hc, double)
 // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
 #ifdef DEBUG_TRACE
-  cout << "NumberOperator::applyTo entered." << endl;
+  std::cout << "NumberOperator::applyTo entered." << endl;
 #endif
   int i;
   Complex center = v.centerCoords();
@@ -174,7 +174,7 @@ void XOperator::applyTo(State& v, int hc, double)
 // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
 #ifdef DEBUG_TRACE
-  cout << "XOperator::applyTo entered." << endl;
+  std::cout << "XOperator::applyTo entered." << endl;
 #endif
   Complex center = v.centerCoords();
   int vSize = v.size();
@@ -213,7 +213,7 @@ void POperator::applyTo(State& v, int hc, double)
 // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
 #ifdef DEBUG_TRACE
-  cout << "XOperator::applyTo entered." << endl;
+  std::cout << "XOperator::applyTo entered." << endl;
 #endif
   Complex center = v.centerCoords();
   int vSize = v.size();

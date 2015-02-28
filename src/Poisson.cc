@@ -2,9 +2,9 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include <iostream.h>
-#include <math.h>
-#include <stdlib.h>
+#include <iostream>
+#include <cmath>
+#include <cstdlib>
 #include <fftw3.h>
 
 #include "Complex.h"

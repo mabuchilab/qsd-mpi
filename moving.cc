@@ -2,10 +2,10 @@
 // Different unravelings can be chosen by uncommenting or
 // commenting out the appropriate lines.
 
-#include <math.h>
-#include <stdio.h>
-#include <iostream.h>
-#include <fstream.h>
+#include <cmath>
+#include <cstdio>
+#include <iostream>
+#include <fstream>
 
 #include "ACG.h"
 #include "Traject.h"

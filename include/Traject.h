@@ -34,7 +34,7 @@
 #ifndef _Traject_hhh
 #define _Traject_hhh 1
 
-#include <stdio.h>
+#include <cstdio>
 #include "Operator.h"
 #include "CmplxRan.h"
 

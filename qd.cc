@@ -1,9 +1,10 @@
 // Test program for qd modules.
 
-#include <math.h>
-#include <stdio.h>
-#include <iostream.h>
-#include <fstream.h>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <fstream>
 #include <fftw3.h>
 
 #include "Coeff.h"
@@ -25,13 +26,18 @@ main()
   double* dif;
   double alpha = 3.0, r2;
 
-  fftw_complex in[2], out[2];
+//  fftw_complex in[2], out[2];
+	fftw_complex* in = (fftw_complex*)fftw_malloc(2*sizeof(fftw_complex));
+	fftw_complex* out = (fftw_complex*)fftw_malloc(2*sizeof(fftw_complex));
+
   fftw_plan p;
   p = fftw_plan_dft_1d(2, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
   fftw_execute(p);
   fftw_destroy_plan(p);
   fftw_free(in);
   fftw_free(out);
+
+exit(1);
 
   i = cc.getN();
 //  c = new  double[2*cc.getN()+1];

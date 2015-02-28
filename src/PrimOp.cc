@@ -31,8 +31,8 @@
 //   Egham, Surrey TW20 0EX, UK
 /////////////////////////////////////////////////////////////////////////////
 
-#include <stdlib.h>
-#include <iostream.h>
+#include <cstdlib>
+#include <iostream>
 
 #include "PrimOp.h"
 
@@ -46,7 +46,7 @@ void PrimaryOperator::resetFreedom(int freedom)
 {
 #ifndef OPTIMIZE_QSD
   if( freedom < 0 ) {
-    cerr << "Illegal freedom passed to PrimaryOperator::resetFreedom!" << endl;
+    std::cerr << "Illegal freedom passed to PrimaryOperator::resetFreedom!" << std::endl;
     exit(1);
   }
 #endif
@@ -56,14 +56,14 @@ void PrimaryOperator::resetFreedom(int freedom)
 void IdentityOperator::applyTo(State&,int,double)
 {
 #ifdef DEBUG_TRACE
-  cout << "IdentityOperator::applyTo entered." << endl;
+  std::cout << "IdentityOperator::applyTo entered." << std::endl;
 #endif
 }
 
 void NullOperator::applyTo(State& v,int,double)
 {
 #ifdef DEBUG_TRACE
-  cout << "NullOperator::applyTo entered." << endl;
+  std::cout << "NullOperator::applyTo entered." << std::endl;
 #endif
   for( int i=0; i<v.size(); i++ )
     v[i] = 0;

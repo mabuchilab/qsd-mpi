@@ -64,8 +64,8 @@ const ImaginaryUnit M_IM = MINUS_IMAGINARY_UNIT;
 
 // I/O functions for FreedomType
 
-ostream& operator<<( ostream&, FreedomType );
-istream& operator>>( istream&, FreedomType& );
+std::ostream& operator<<( std::ostream&, FreedomType );
+std::istream& operator>>( std::istream&, FreedomType& );
 
 class State{
 // The State class represents quantum states in a particular choice of
@@ -182,10 +182,10 @@ public:						// public functions
 
 // Friend I/O operations
 
-  friend ostream& operator<<( ostream&, const State&);
+  friend std::ostream& operator<<( std::ostream&, const State&);
     // outputs a state in a standard ASCII form.  This can be used to
     // save and recover results of a calculation.
-  friend istream& operator>>( istream&, State& );
+  friend std::istream& operator>>( std::istream&, State& );
     // inputs a state in a standard ASCII form.  This can be used to
     // save and recover results of a calculation.
 

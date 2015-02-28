@@ -31,8 +31,8 @@
 //   Egham, Surrey TW20 0EX, UK
 /////////////////////////////////////////////////////////////////////////////
 
-#include <stdlib.h>
-#include <iostream.h>
+#include <cstdlib>
+#include <iostream>
 
 #include "Operator.h"
 #include "PrimOp.h"
@@ -44,7 +44,7 @@ int Operator::flag = 0;   // Static flag, set by constructors, tested by
 
 void Operator::error( const char* msg ) const
 {
-  cerr << "Fatal error in class Operator or derived class:\n  " << msg << endl;
+  std::cerr << "Fatal error in class Operator or derived class:\n  " << msg << std::endl;
   exit(1);
 }
 
@@ -114,7 +114,8 @@ Operator::Operator()   // Default constructor.
   flag = 1;
 }
 
-Operator::Operator(char*)  // Private constructor called by `PrimaryOperator'.
+//Operator::Operator(char*)  // Private constructor called by `PrimaryOperator'.
+Operator::Operator(const char*)  // Private constructor called by `PrimaryOperator'.
 {                          // Does not set `flag'.               
   allocate(1,1);
   stack.com[0] = UNINITIALIZED;
@@ -141,9 +142,9 @@ Operator& Operator::operator=(const Operator& rhs)   // Assignment.
 
 void Operator::printCommandStack() const      // For debugging only.
 {
-  cout << "Operator::printCommandStack():" << endl;
+  std::cout << "Operator::printCommandStack():" << std::endl;
   for( int i=0; i<stack.comSize; i++ )
-    cout << stack.com[i] << endl;
+    std::cout << stack.com[i] << std::endl;
 }
 
 Operator& Operator::operator()(double t)
@@ -170,7 +171,7 @@ State& operator*=(State& psi, const Operator& X)
 // object is created. 
 {
   #ifdef DEBUG_TRACE
-    cout << "operator*=(State&,Operator&) entered." << endl;
+    std::cout << "operator*=(State&,Operator&) entered." << std::endl;
   #endif
   #ifndef NON_GNU_SCOPE
     Operator::StackPtr stackPtr = {0,0,0,0,0,0};  // Initialize stack pointers.
@@ -179,7 +180,7 @@ State& operator*=(State& psi, const Operator& X)
   #endif //----------NON GNU CODE----
   X.eval( stackPtr, psi );             // Enter the recursive `Operator::eval'.
   #ifdef DEBUG_TRACE
-    cout << "Returning from operator*=(State&,Operator&)." << endl;
+    std::cout << "Returning from operator*=(State&,Operator&)." << std::endl;
   #endif
   return psi;
 }
@@ -224,7 +225,7 @@ void Operator::eval( StackPtr& stackPtr, State& psi ) const
     
   case OPERATOR: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::eval for case OPERATOR entered." << endl;
+    std::cout << "Operator::eval for case OPERATOR entered." << std::endl;
     #endif
     PrimaryOperator& A = *stack.op[stackPtr.op++];
     psi.apply(A,NO_HC,A.myFreedom,A.myType,time);
@@ -235,7 +236,7 @@ void Operator::eval( StackPtr& stackPtr, State& psi ) const
 
   case OPERATOR_HC: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::eval for case OPERATOR_HC entered." << endl;
+    std::cout << "Operator::eval for case OPERATOR_HC entered." << std::endl;
     #endif
     PrimaryOperator& A = *stack.op[stackPtr.op++];
     psi.apply(A,HC,A.myFreedom,A.myType,time);
@@ -274,7 +275,7 @@ void Operator::eval( StackPtr& stackPtr, State& psi ) const
 
   case PLUS: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::eval for case PLUS entered." << endl;
+    std::cout << "Operator::eval for case PLUS entered." << std::endl;
     #endif
     State psi1;                     
     psi1.xerox(psi);                // Copy psi into psi1.
@@ -286,7 +287,7 @@ void Operator::eval( StackPtr& stackPtr, State& psi ) const
     
   case MINUS: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::eval for case MINUS entered." << endl;
+    std::cout << "Operator::eval for case MINUS entered." << std::endl;
     #endif
     State psi1;                     
     psi1.xerox(psi);                // Copy psi into psi1.
@@ -298,7 +299,7 @@ void Operator::eval( StackPtr& stackPtr, State& psi ) const
 
   case TIMES:
     #ifdef DEBUG_TRACE
-    cout << "Operator::eval for case TIMES entered." << endl;
+    std::cout << "Operator::eval for case TIMES entered." << std::endl;
     #endif
     eval( stackPtr, psi );     // Apply (popped) stack to psi.
     eval( stackPtr, psi );     // Apply (popped) stack to (modified) psi.
@@ -618,7 +619,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   {
   case OPERATOR: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case OPERATOR entered." << endl;
+    std::cout << "Operator::dagger for case OPERATOR entered." << std::endl;
     #endif
     Operator Z;
     Z.deallocate();
@@ -629,7 +630,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   }
   case OPERATOR_HC: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case OPERATOR_HC entered." << endl;
+    std::cout << "Operator::dagger for case OPERATOR_HC entered." << std::endl;
     #endif
     Operator Z;
     Z.deallocate();
@@ -640,7 +641,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   }
   case COMPLEX: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case COMPLEX entered." << endl;
+    std::cout << "Operator::dagger for case COMPLEX entered." << std::endl;
     #endif
     Operator Z;
     Z.deallocate();
@@ -651,7 +652,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   }
   case REAL: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case REAL entered." << endl;
+    std::cout << "Operator::dagger for case REAL entered." << std::endl;
     #endif
     Operator Z;
     Z.deallocate();
@@ -662,7 +663,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   }
   case IMAG: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case IMAG entered." << endl;
+    std::cout << "Operator::dagger for case IMAG entered." << std::endl;
     #endif
     Operator Z;
     Z.deallocate();
@@ -672,7 +673,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   }
   case M_IMAG: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case M_IMAG entered." << endl;
+    std::cout << "Operator::dagger for case M_IMAG entered." << std::endl;
     #endif
     Operator Z;
     Z.deallocate();
@@ -682,7 +683,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   }
   case CFUNC: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case CFUNC entered." << endl;
+    std::cout << "Operator::dagger for case CFUNC entered." << std::endl;
     #endif
     Operator Z;
     Z.deallocate();
@@ -693,7 +694,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   }
   case CCFUNC: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case CCFUNC entered." << endl;
+    std::cout << "Operator::dagger for case CCFUNC entered." << std::endl;
     #endif
     Operator Z;
     Z.deallocate();
@@ -704,7 +705,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   }
   case RFUNC: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case RFUNC entered." << endl;
+    std::cout << "Operator::dagger for case RFUNC entered." << std::endl;
     #endif
     Operator Z;
     Z.deallocate();
@@ -715,7 +716,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   }
   case PLUS: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case PLUS entered." << endl;
+    std::cout << "Operator::dagger for case PLUS entered." << std::endl;
     #endif
     Operator Z = dagger( stackPtr );
     Operator X = dagger( stackPtr );
@@ -723,7 +724,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   }
   case MINUS: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case MINUS entered." << endl;
+    std::cout << "Operator::dagger for case MINUS entered." << std::endl;
     #endif
     Operator Z = dagger( stackPtr );
     Operator X = dagger( stackPtr );
@@ -731,7 +732,7 @@ Operator Operator::dagger( StackPtr& stackPtr ) const
   }
   case TIMES: {
     #ifdef DEBUG_TRACE
-    cout << "Operator::dagger for case TIMES entered." << endl;
+    std::cout << "Operator::dagger for case TIMES entered." << std::endl;
     #endif
     Operator Z = dagger( stackPtr );
     Operator X = dagger( stackPtr );

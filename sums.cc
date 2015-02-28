@@ -1,9 +1,9 @@
 // Simple harmonic oscillator, sum over trajectories.
  
-#include <math.h>
-#include <stdio.h>
-#include <iostream.h>
-#include <fstream.h>
+#include <cmath>
+#include <cstdio>
+#include <iostream>
+#include <fstream>
 
 #include "ACG.h"
 #include "Traject.h"

@@ -2,10 +2,10 @@
 //   for the second derivative in a regular on-dimensional grid (Laplacian)
 /////////////////////////////////////////////////////////////////////////////
 
-#include <iostream.h>
-#include <math.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <iostream>
+#include <cmath>
+#include <cstdlib>
+#include <cstdio>
 
 #include "Coeff.h"
 

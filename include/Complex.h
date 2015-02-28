@@ -22,7 +22,7 @@ Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 #ifndef _Complex_hhh
 #define _Complex_hhh 1
 
-#include <iostream.h>
+#include <iostream>
 #include <math.h>
 
 class Complex
@@ -84,8 +84,8 @@ Complex   pow(const Complex& x, const Complex& p);
 Complex   pow(const Complex& x, double y);
 Complex   sqrt(const Complex& x);
    
-istream&  operator >> (istream& s, Complex& x);
-ostream&  operator << (ostream& s, const Complex& x);
+std::istream&  operator >> (std::istream& s, Complex& x);
+std::ostream&  operator << (std::ostream& s, const Complex& x);
 
 
 // inline members

@@ -2,28 +2,55 @@
 
 QSD_DIR = .
 
+PYTHONPATH = /usr/local/usp/petens/python_install
+
 CXX = g++
-INCLUDE = /opt/compiler/intel/ict/3.2/mkl/10.1/include
-FLAGS = -g -O -Wno-deprecated  -I$(INCLUDE)
-FC       = ifort  -c
-DFLAGS   =  -D__INTEL -D__LAPACK -D__FFTW3
+#INCLUDE = /opt/compiler/intel/ict/3.2/mkl/10.1/include
+#INCLUDE = /usr/local/usp/COST/fftw-mpi-3.3.3/include
+INCLUDE = $(PYTHONPATH)/include
+
+#FLAGS = -g -O -Wno-deprecated  -I$(INCLUDE)
+FLAGS = -g -O -Wno-deprecated  -Wno-write-strings -I$(INCLUDE)
+
+#FC       = ifort  -c
+FC       = gfortran  -c
+#DFLAGS   =  -D__INTEL -D__LAPACK -D__FFTW3
+DFLAGS   =  -D__LAPACK -D__FFTW3
 ##-D__FFTSG -D__FFTW2 -D__parallel -D__BLACS -D__SCALAPACK
-FCFLAGS =  -O2 -ftz -IPF-fp-relaxed  -heap-arrays 64 -I$(INCLUDE) 
+#FCFLAGS =  -O2 -ftz -IPF-fp-relaxed  -heap-arrays 64 -I$(INCLUDE) 
+FCFLAGS =  -O2 -I$(INCLUDE) 
 
 INC = $(QSD_DIR)/include
 SRC = $(QSD_DIR)/src
 
 LOADLIBES = -lm
-LDFLAGS = -L/opt/compiler/intel/ict/3.2/mkl/10.1/lib/em64t -lmkl_scalapack
-LDFLAGS = -L$(MKLPATH) -lmkl_scalapack -lmkl_solver_ilp64_sequential -Wl,--start-group -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -Wl,--end-group -lpthread -L/opt/compiler/intel/compiler/11.0/lib/intel64/ -lifcore $(LOADLIBES)
-FFTFLAGS =  -L/usr/cta/unsupported/fftw/3.1.2-intel/lib -lfftw3
-##FFTFLAGS = -L$(HOME)/lib  -lfftw3
-CXXFLAGS = $(DCC) -I$(INC) -I$(HOME)/include  $(FLAGS)
-CPPFLAGS = -L$(MKLPATH) -lmkl_lapack -lmkl -lguide
+#LDFLAGS = -L/opt/compiler/intel/ict/3.2/mkl/10.1/lib/em64t -lmkl_scalapack
+
+#LDFLAGS = -L$(MKLPATH) -lmkl_scalapack -lmkl_solver_ilp64_sequential -Wl,--start-group -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -Wl,--end-group -lpthread -L/opt/compiler/intel/compiler/11.0/lib/intel64/ -lifcore $(LOADLIBES)
+
+#LDFLAGS = -Wl,--start-group -Wl,--end-group -lpthread $(LOADLIBES)
+LDFLAGS = -lgfortran -lpthread
+
+LDFLAGS += $(PYTHONPATH)/lib/liblapack.a $(PYTHONPATH)/lib/libblas.a
+
+#FFTFLAGS =  -L/usr/cta/unsupported/fftw/3.1.2-intel/lib -lfftw3
+#FFTFLAGS =  -L/usr/local/usp/COST/fftw-mpi-3.3.3/lib -lfftw3
+#FFTFLAGS =  /usr/local/usp/COST/fftw-mpi-3.3.3/lib/libfftw3.a
+#FFTFLAGS =  -L/lustre/home1/u/richied/work2/lib -lfftw3
+FFTFLAGS =  -L$(PYTHONPATH)/lib -lfftw3
+
+#CXXFLAGS = $(DCC) -I$(INC) -I$(HOME)/include  $(FLAGS)
+CXXFLAGS = $(DCC) -I$(INC) $(FLAGS)
+
+#CPPFLAGS = -L$(MKLPATH) -lmkl_lapack -lmkl -lguide
+CPPFLAGS = 
 
 COMPILE = $(CXX) -c $(CPPFLAGS) $(CXXFLAGS)
 FCOMPILE  = $(FC) $(FCFLAGS) $(DFLAGS)
-LINK = icpc $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(FFTFLAGS)
+#LINK = icpc $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(FFTFLAGS)
+#LINK = g++ $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(FFTFLAGS)
+LINK = g++ $(CPPFLAGS) $(CXXFLAGS) 
+LOADLIBES += $(LDFLAGS) $(FFTFLAGS) -lm
 
 RAN_OBJ =  Random.o Normal.o Uniform.o RNG.o ACG.o MLCG.o CmplxRan.o
 RAN_HEAD = $(INC)/Random.h $(INC)/Normal.h $(INC)/Uniform.h $(INC)/RNG.h $(INC)/ACG.h $(INC)/MLCG.h $(INC)/CmplxRan.h
@@ -34,11 +61,14 @@ OBJ2 = FieldOp.o SpinOp.o AtomOp.o
 OBJ3 = Traject.o $(RAN_OBJ)
 OBJ4 = mesh.o coeff.o poisson.o 
 OBJ5 = Mesh.o Coeff.o Epot.o Poisson.o
-OBJ = $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5)
+OBJ6 = cf.o fftw3.o
+OBJ = $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6)
 #-------------------------------------------------------------------
 # Add driver routines here.
 
 ALL = onespin spins simple moving sums testprog template lineob damped qcascade sechar qd 
+
+all: $(ALL)
 
 qd: qd.cc $(OBJ)
 	$(LINK) -o qd qd.cc $(OBJ)  $(LOADLIBES)
@@ -81,16 +111,17 @@ template: template.cc $(OBJ)
 
 #-------------------------------------------------------------------
 
-all: $(ALL)
-
 cleanexe:
-	rm $(ALL)
+	-rm -f $(ALL)
 
 cleanrand:
-	rm $(RAN_OBJ)
+	-rm -f $(RAN_OBJ)
 
 clean:
-	rm *.o
+	-rm -f *.o
+
+distclean: clean cleanrand cleanexe
+	
 
 Traject.o: $(SRC)/Traject.cc $(INC)/Traject.h $(HEAD1) $(RAN_HEAD)
 	$(COMPILE) $(SRC)/Traject.cc

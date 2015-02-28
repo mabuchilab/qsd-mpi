@@ -113,7 +113,7 @@ Complex ComplexNormalTest::operator()()
 RefinedComplexNormal::RefinedComplexNormal(RNG *g1,RNG *g2,int theOffset)
 {
   if( theOffset < 1 ) {
-    cerr << "Error in RefinedComplexNormal: non-positive offset." << endl;
+    std::cerr << "Error in RefinedComplexNormal: non-positive offset." << std::endl;
     exit(1);
   }
   offset = theOffset;

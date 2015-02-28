@@ -60,7 +60,7 @@ public:
   //
     if( flag && !pflag ) {
       pflag = 1;
-      cerr << "Warning: It is recommended to define all special operators,\n"
+      std::cerr << "Warning: It is recommended to define all special operators,\n"
 	<< "i.e., all instances of classes derived from `PrimaryOperator',\n"
         << "e.g., instances of `IdentityOperator' or `NullOperator',\n"
 	<< "before an instance of the `Operator' class is defined.\n"

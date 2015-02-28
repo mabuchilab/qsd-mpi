@@ -2,10 +2,10 @@
 
 // One spin, one or several trajectories.
 
-#include <math.h>
-#include <stdio.h>
-#include <iostream.h>
-#include <fstream.h>
+#include <cmath>
+#include <cstdio>
+#include <iostream>
+#include <fstream>
 
 #include "ACG.h"
 #include "Traject.h"
@@ -89,7 +89,7 @@ main()
   for( int i=0; i<nTraj; i++ ) {
     Trajectory theTraject(psi0,dt,theStepper,&rand1);
     theTraject.plotExp(nOfOut,outlist,flist,pipe,numdts,numsteps);
-    cout << endl;
+    std::cout << std::endl;
   }
 }
 

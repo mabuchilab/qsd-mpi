@@ -26,7 +26,7 @@ static const char rcsid[] = "$Id: Complex.cc,v 3.1 1996/11/19 10:05:08 rschack E
 
 void Complex::error(const char* msg) const
 {
-  cerr << "Fatal Complex arithmetic error. " << msg << endl;
+  std::cerr << "Fatal Complex arithmetic error. " << msg << std::endl;
   exit(1);
 }
  
@@ -226,32 +226,32 @@ Complex /* const */ pow(const Complex& x, int p)
   }
 }
 
-ostream& operator << (ostream& s, const Complex& x)
+std::ostream& operator << (std::ostream& s, const Complex& x)
 {
   return s << "(" << x.real() << ", " << x.imag() << ")" ;
 }
 
-istream& operator >> (istream& s, Complex& x)
+std::istream& operator >> (std::istream& s, Complex& x)
 {
   double r, i;
   char ch;
-  s >> ws;
+  s >> std::ws;
   s.get(ch);
   if (ch == '(')
   {
     s >> r;
-    s >> ws;
+    s >> std::ws;
     s.get(ch);
     if (ch == ',')
     {
       s >> i;
-      s >> ws;
+      s >> std::ws;
       s.get(ch);
     }
     else
       i = 0;
     if (ch != ')')
-      s.clear(ios::failbit);
+      s.clear(std::ios::failbit);
   }
   else
   {

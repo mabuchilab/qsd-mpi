@@ -31,8 +31,8 @@
 //   Egham, Surrey TW20 0EX, UK
 /////////////////////////////////////////////////////////////////////////////
 
-#include <iostream.h>
-#include <stdlib.h>
+#include <iostream>
+#include <cstdlib>
 
 #include "SpinOp.h"
 

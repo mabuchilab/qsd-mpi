@@ -31,11 +31,11 @@
 //   Egham, Surrey TW20 0EX, UK
 /////////////////////////////////////////////////////////////////////////////
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstdlib>
+#include <cstdio>
 #include <math.h>
-#include <iostream.h>
-#include <fstream.h>
+#include <iostream>
+#include <fstream>
 
 #include "Complex.h"
 #include "State.h"
@@ -199,7 +199,7 @@ void AdaptiveStochStep::operator()(State& psi, double t, double dt,
 //
 {
   int nok, nbad;
-  cout << " Using adaptiveStochStep Rad " << endl;
+  std::cout << " Using adaptiveStochStep Rad " << std::endl;
   newsum = psi;					// initialize temp
   odeint(psi,t,t+dt,epsilon,dtlast,0.0,nok,nbad,rndm);
 	// generate deterministic evolution (and also stochastic)
@@ -270,8 +270,8 @@ void Trajectory::plotExp_obsolete( int nX, const Operator* X, FILE** fp, int* pi
   if( nX > 0 ) {
     for( int k=0; k<4; k++ )
       if( pipe[k] < 1 || pipe[k] > 4*nX )
-        cerr << "Warning: illegal argument 'pipe' in Trajectory::plotExp." 
-          << endl;
+        std::cerr << "Warning: illegal argument 'pipe' in Trajectory::plotExp." 
+          << std::endl;
   }
 
   State psi1 = psi;			// temporary state
@@ -326,9 +326,9 @@ void Trajectory::plotExp_obsolete( int nX, const Operator* X, FILE** fp, int* pi
 //
 // Save state to output file
 //
-//  ofstream os("saved_state.dat", ios::out );
+//  std::ofstream os("saved_state.dat", ios::out );
 //  if (!os) {
-//    cerr << "Can't open output file:  saved_state.dat" << endl;
+//    std::cerr << "Can't open output file:  saved_state.dat" << std::endl;
 //    exit(1);
 //  }
 //  os << psi;
@@ -363,8 +363,8 @@ void Trajectory::plotExp( int nX, const Operator* X, char** fname, int* pipe,
   if( nX > 0 ) {
     for( int k=0; k<4; k++ )
       if( pipe[k] < 1 || pipe[k] > 4*nX )
-        cerr << "Warning: illegal argument 'pipe' in Trajectory::plotExp." 
-          << endl;
+        std::cerr << "Warning: illegal argument 'pipe' in Trajectory::plotExp." 
+          << std::endl;
   }
 
   State psi1 = psi;			// temporary state
@@ -423,9 +423,9 @@ void Trajectory::plotExp( int nX, const Operator* X, char** fname, int* pipe,
   }
   // Save state to output file
   if (savedState) {
-    ofstream os(savedState, ios::out );
+    std::ofstream os(savedState, std::ios::out );
     if (!os) {
-      cerr << "Can't open output file: " << savedState << endl;
+      std::cerr << "Can't open output file: " << savedState << std::endl;
       exit(1);
     }
     os << psi;
@@ -497,14 +497,14 @@ void Trajectory::sumExp( int nX, const Operator* X, char** fname,
 	for ( i=0; i<2*nX; i++) OutputExpR[n][i] *= nTrajEff;
       for ( n=0; n<=nOfSteps; n++)
 	for ( i=0; i<2*nX; i++) OutputExpI[n][i] *= nTrajEff;
-      cout << " Using " << nTrajEff << " previous trajectories " << endl;
+      std::cout << " Using " << nTrajEff << " previous trajectories " << std::endl;
     }
   }
   //
   // Computation of the expectation values 
   //
   for( k=0; k<nTrajectory; k++ ) {
-    cout << "Computing trajectory " << k+1  << endl;
+    std::cout << "Computing trajectory " << k+1  << std::endl;
     ++nTrajEff;
     t = t0;
     psi = psi0;
@@ -845,10 +845,10 @@ void AdaptiveStep::rkqs(double& t, double htry, double eps,
 //		if (h < 0.1*h) h *= 0.1;
 		tnew=t+h;
 		if (tnew == t) {
-		  cerr << "stepsize underflow in rkqs" << endl;
-		  cerr << "errmax = " << errmax << endl;
-		  cerr << "h = " << h << endl;
-		  cerr << "eps = " << eps << endl;
+		  std::cerr << "stepsize underflow in rkqs" << std::endl;
+		  std::cerr << "errmax = " << errmax << std::endl;
+		  std::cerr << "h = " << h << std::endl;
+		  std::cerr << "eps = " << eps << std::endl;
 		  exit(1);
 		}
 		continue;
@@ -901,12 +901,12 @@ void AdaptiveStep::odeint(State& ystart, double t1, double t2, double eps, doubl
 		return;
 	}
 	if (fabs(hnext) <= hmin) {
-	  cerr << "Step size too small in odeint" << endl;
+	  std::cerr << "Step size too small in odeint" << std::endl;
 	  exit(1);
 	}
 	h=hnext;
   }
-  cerr << "Too many steps in routine odeint" << endl;
+  std::cerr << "Too many steps in routine odeint" << std::endl;
   exit(1);
 }
 
@@ -962,12 +962,12 @@ void AdaptiveStochStep::odeint(State& ystart, double t1, double t2, double eps, 
       return;
     }
     if (fabs(hnext) <= hmin) {
-      cerr << "Step size too small in odeint" << endl;
+      std::cerr << "Step size too small in odeint" << std::endl;
       exit(1);
     }
     h=hnext;
   }
-  cerr << "Too many steps in routine odeint" << endl;
+  std::cerr << "Too many steps in routine odeint" << std::endl;
   exit(1);
 }
 
@@ -1041,12 +1041,12 @@ void AdaptiveJump::odeint(State& ystart, double t1, double t2, double eps, doubl
       return;
     }
     if (fabs(hnext) <= hmin) {
-      cerr << "Step size too small in odeint" << endl;
+      std::cerr << "Step size too small in odeint" << std::endl;
       exit(1);
     }
     h=hnext;
   }
-  cerr << "Too many steps in routine odeint" << endl;
+  std::cerr << "Too many steps in routine odeint" << std::endl;
   exit(1);
 }
 
@@ -1119,12 +1119,12 @@ void AdaptiveOrthoJump::odeint(State& ystart, double t1, double t2, double eps, 
       return;
     }
     if (fabs(hnext) <= hmin) {
-      cerr << "Step size too small in odeint" << endl;
+      std::cerr << "Step size too small in odeint" << std::endl;
       exit(1);
     }
     h=hnext;
   }
-  cerr << "Too many steps in routine odeint" << endl;
+  std::cerr << "Too many steps in routine odeint" << std::endl;
   exit(1);
 }
 
@@ -1148,7 +1148,7 @@ void AdaptiveStep::dtListRead()
 //
 {
   for( int i=0; i<listPtr; i++ )
-    cout << dtNumList[i] << endl;
+    std::cout << dtNumList[i] << std::endl;
 }
 
 int AdaptiveStep::dtListElem( int theElem )
@@ -1287,13 +1287,13 @@ void AdaptiveOrthoJump::derivs(double t, State& psi, State& dpsi)
 
 void Trajectory::error(char* message)	// print error message and exit
 {
-  cerr << message << endl;
+  std::cerr << message << std::endl;
   exit(1);
 }
 
 void IntegrationStep::error(char* message)	// print error message
 {						// and exit
-  cerr << message << endl;
+  std::cerr << message << std::endl;
   exit(1);
 }
 

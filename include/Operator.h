@@ -196,7 +196,8 @@ private:
   void allocate( int,int,int,int,int,int );
   void deallocate();
   Operator dagger( StackPtr& ) const;
-  Operator(char*);
+//  Operator(char*);
+  Operator(const char*);
 };
 
 #endif
