@@ -61,7 +61,7 @@ OBJ2 = FieldOp.o SpinOp.o AtomOp.o
 OBJ3 = Traject.o $(RAN_OBJ)
 OBJ4 = mesh.o coeff.o poisson.o 
 OBJ5 = Mesh.o Coeff.o Epot.o Poisson.o
-OBJ6 = cf.o fftw3.o
+OBJ6 = cube_function.o fftw3.o
 OBJ = $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6)
 #-------------------------------------------------------------------
 # Add driver routines here.
@@ -186,8 +186,8 @@ coeff.o: $(SRC)/coeff.f90
 fftw3.o: $(SRC)/fftw3.f90
 	$(FCOMPILE) $(SRC)/fftw3.f90
 
-cf.o: $(SRC)/cf.f90
-	$(FCOMPILE) $(SRC)/cf.f90
+cube_function.o: $(SRC)/cube_function.f90
+	$(FCOMPILE) $(SRC)/cube_function.f90
 
 poisson.o: $(SRC)/poisson.f90
 	$(FCOMPILE) $(SRC)/poisson.f90
