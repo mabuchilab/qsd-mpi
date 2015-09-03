@@ -3,7 +3,8 @@
 QSD_DIR = .
 
 
-CXX = g++
+#CXX = g++
+CXX = CC
 
 PYTHONPATH = /lustre/home1/local/usp/petens/compute_node_python_install
 
@@ -12,7 +13,8 @@ INCLUDE = $(PYTHONPATH)/include
 #FLAGS = -g -O -Wno-deprecated  -I$(INCLUDE)
 FLAGS = -g -O -I$(INCLUDE)
 
-FC       = gfortran  -c
+#FC       = gfortran  -c
+FC       = ftn  -c
 
 DFLAGS   =  -D__LAPACK -D__FFTW3
 FCFLAGS =  -O2 -I$(INCLUDE) 
@@ -34,7 +36,8 @@ CPPFLAGS =
 
 COMPILE = $(CXX) -c $(CPPFLAGS) $(CXXFLAGS)
 FCOMPILE  = $(FC) $(FCFLAGS) $(DFLAGS)
-LINK = g++ $(CPPFLAGS) $(CXXFLAGS) 
+#LINK = g++ $(CPPFLAGS) $(CXXFLAGS) 
+LINK = CC $(CPPFLAGS) $(CXXFLAGS) 
 LOADLIBES += $(LDFLAGS) $(FFTFLAGS) -lm
 
 RAN_OBJ =  Random.o Normal.o Uniform.o RNG.o ACG.o MLCG.o CmplxRan.o

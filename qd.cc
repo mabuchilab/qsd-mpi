@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <fftw3.h>
+#include <mpi.h>
 
 #include "Coeff.h"
 #include "Constants.h"
@@ -37,7 +38,7 @@ main()
   fftw_free(in);
   fftw_free(out);
 
-exit(1);
+//exit(1);
 
   i = cc.getN();
 //  c = new  double[2*cc.getN()+1];

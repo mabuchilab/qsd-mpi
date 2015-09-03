@@ -1,4 +1,4 @@
-GFORTRAN module version '10' created from ./src/cf.f90
+GFORTRAN module version '10' created from ./src/cube_function.f90
 MD5:6b1f611f391907c3fa5a35d60e653bf3 -- If you edit this, you'll get what you deserve.
 
 (() () () () () () () () () () () () () () () () () () () () () () ()
