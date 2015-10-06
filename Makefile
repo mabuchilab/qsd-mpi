@@ -1,4 +1,12 @@
 # Makefile for QSD code.
+# Note: you may compile for a specific known platform with e.g.
+#
+#     make all PLATFORM=copper
+#
+#     or
+#
+#     make all PLATFORM=mlhpc
+#
 
 QSD_DIR = .
 INC = $(QSD_DIR)/include
@@ -13,28 +21,36 @@ FLAGS = -O2 -I$(QSD_DIR) -I$(INC)
 
 
 # The C++ compiler
-CXX = CC # copper
-#CXX = g++ # mlhpc
+CXX        = g++
+CXX_copper = CC
+CXX_mlhpc  = mpiCC
+ifdef PLATFORM
+    CXX = ${CXX_$(PLATFORM)}
+endif
 COMPILE = $(CXX) -c $(FLAGS)
 
 
 # The Fortran compiler
-FC       = ftn # copper
-#FC       = gfortran # mlphc
+#FC       = ftn # copper
+FC        = gfortran
+FC_copper = ftn
+FC_mlhpc  = gfortran
+ifdef PLATFORM
+    FC = ${FC_$(PLATFORM)}
+endif
 FCOMPILE  = $(FC) -c $(FLAGS)
 
 
 # The Linker
 # call to linker will be $(LINK) [objectfiles] $(LDFLAGS) $(LIBS)
 # QSD depends on Lapack/BLAS and FFTW3
-#LINK = CC $(FLAGS) # copper
-#LINK = gcc $(FLAGS) # mlphc
 LINK = $(CXX) $(FLAGS) # Usually, the compiler executable knows how to link
-BLASLIBS = # copper: LAPACK and BLAS routines are included in the compiler
-#BLASLIBS = -lblas -llapack # mlhpc
-#GNULIBS = -lgfortran -lm # mlphc (compilation with g++/gfortran)
-FFTLIBS =  -lfftw3 # copper: `module load fftw`
-LIBS = $(GNULIBS) $(BLASLIBS) $(FFTLIBS)
+LIBS        = -lblas -llapack -lgfortran -lm -lfftw3
+LIBS_copper = -lfftw3 # note: `module load fftw`; LAPACK/BLAS are included in compiler
+LIBS_mlhpc  = -lblas -llapack -lgfortran -lm -lmpi -lfftw3
+ifdef PLATFORM
+    LIBS = ${LIBS_$(PLATFORM)}
+endif
 LDFLAGS = -L$(QSD_DIR) # where .o files are located
 
 
