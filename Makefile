@@ -14,22 +14,27 @@ FLAGS = -O2 -I$(QSD_DIR) -I$(INC)
 
 # The C++ compiler
 CXX = CC # copper
+#CXX = g++ # mlhpc
 COMPILE = $(CXX) -c $(FLAGS)
 
 
 # The Fortran compiler
 FC       = ftn # copper
+#FC       = gfortran # mlphc
 FCOMPILE  = $(FC) -c $(FLAGS)
 
 
 # The Linker
 # call to linker will be $(LINK) [objectfiles] $(LDFLAGS) $(LIBS)
 # QSD depends on Lapack/BLAS and FFTW3
-LINK = CC $(FLAGS)
-#BLASLIBS = -lblas -llapack
+#LINK = CC $(FLAGS) # copper
+#LINK = gcc $(FLAGS) # mlphc
+LINK = $(CXX) $(FLAGS) # Usually, the compiler executable knows how to link
 BLASLIBS = # copper: LAPACK and BLAS routines are included in the compiler
+#BLASLIBS = -lblas -llapack # mlhpc
+#GNULIBS = -lgfortran -lm # mlphc (compilation with g++/gfortran)
 FFTLIBS =  -lfftw3 # copper: `module load fftw`
-LIBS = $(BLASLIBS) $(FFTLIBS)
+LIBS = $(GNULIBS) $(BLASLIBS) $(FFTLIBS)
 LDFLAGS = -L$(QSD_DIR) # where .o files are located
 
 
