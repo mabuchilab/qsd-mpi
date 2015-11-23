@@ -78,6 +78,12 @@ OBJ = $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6)
 
 ALL = onespin spins simple moving sums testprog template lineob damped qcascade sechar qd
 
+help:
+	@echo ""
+	@echo "To compile all example programs with settings for the mlhpc platform, run"
+	@echo "make all PLATFORM=mlhpc"
+	@echo ""
+
 all: $(ALL)
 
 debug:
@@ -213,5 +219,5 @@ distclean: clean cleanexe
 
 #-------------------------------------------------------------------
 
-.PHONY: all debug objectfiles cleanexe cleanrand clean distclean
+.PHONY: all debug objectfiles cleanexe cleanrand clean distclean help
 
