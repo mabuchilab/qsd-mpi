@@ -83,8 +83,14 @@ help:
 	@echo "To compile all example programs with settings for the mlhpc platform, run"
 	@echo "make all PLATFORM=mlhpc"
 	@echo ""
+	@echo "To compile the library statically, run e.g."
+	@echo "make libqsd.a PLATFORM=mlhpc"
+	@echo ""
 
 all: $(ALL)
+
+libqsd.a: $(OBJ)
+	@ar -rc libqsd.a $(OBJ)
 
 debug:
 	$(warning *** SUMMARY OF VARIABLES ***)
@@ -213,7 +219,7 @@ cleanrand:
 	rm -f $(RAN_OBJ)
 
 clean:
-	rm -f *.o *.mod
+	rm -f *.o *.mod *.a
 
 distclean: clean cleanexe
 
