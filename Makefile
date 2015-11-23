@@ -12,6 +12,7 @@ QSD_DIR = .
 INC = $(QSD_DIR)/include
 SRC = $(QSD_DIR)/src
 
+PREFIX ?= $(HOME)/local
 
 # Compiler/linker flags common to C++ and Fortran
 # -I : folder where C-compiler finds *.h Fortran compiler finds *.mod
@@ -81,10 +82,20 @@ ALL = onespin spins simple moving sums testprog template lineob damped qcascade 
 help:
 	@echo ""
 	@echo "To compile all example programs with settings for the mlhpc platform, run"
-	@echo "make all PLATFORM=mlhpc"
+	@echo ""
+	@echo "    make all PLATFORM=mlhpc"
 	@echo ""
 	@echo "To compile the library statically, run e.g."
-	@echo "make libqsd.a PLATFORM=mlhpc"
+	@echo ""
+	@echo "    make libqsd.a PLATFORM=mlhpc"
+	@echo ""
+	@echo "To install the library after compilation, run e.g."
+	@echo ""
+	@echo "    make install PREFIX=~/local/"
+	@echo ""
+	@echo "It can be uninstalled with"
+	@echo ""
+	@echo "    make uninstall PREFIX=~/local/"
 	@echo ""
 
 all: $(ALL)
@@ -223,7 +234,19 @@ clean:
 
 distclean: clean cleanexe
 
+install: libqsd.a
+	mkdir -p $(PREFIX)/lib
+	mkdir -p $(PREFIX)/include/qsd
+	cp libqsd.a $(PREFIX)/lib/
+	cp include/* $(PREFIX)/include/qsd/
+
+uninstall:
+	rm -rf $(PREFIX)/include/qsd
+	rm -rf $(PREFIX)/lib/libqsd.a
+	rmdir --ignore-fail-on-non-empty -p $(PREFIX)/include
+	rmdir --ignore-fail-on-non-empty -p $(PREFIX)/lib
+
 #-------------------------------------------------------------------
 
-.PHONY: all debug objectfiles cleanexe cleanrand clean distclean help
+.PHONY: all debug objectfiles cleanexe cleanrand clean distclean help install uninstall
 
