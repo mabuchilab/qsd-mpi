@@ -1,17 +1,17 @@
 //   FieldOp.cc -- Operators for a harmonic oscillator mode.
-//     
+//
 //   Copyright (C) 1995  Todd Brun and Ruediger Schack
-//   
+//
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
 //   the Free Software Foundation; either version 2 of the License, or
 //   (at your option) any later version.
-//   
+//
 //   This program is distributed in the hope that it will be useful,
 //   but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//   
+//
 //   You should have received a copy of the GNU General Public License
 //   along with this program; if not, write to the Free Software
 //   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -43,8 +43,8 @@ static double* intSqrt = 0;
 static double* halfIntSqrt = 0;
 
 static void computeIntSqrt(int newSize)
-//
-// Compute integer square roots.
+  //
+  // Compute integer square roots.
 {
   if(intSqrtSize < newSize) {
 #ifndef NON_GNU_DELETE
@@ -72,40 +72,40 @@ void AnnihilationOperator::applyTo(State& v, int hc, double)
   int i;
   Complex center = v.centerCoords();
   int vSize = v.size();
-  if( intSqrtSize < vSize ) 
+  if( intSqrtSize < vSize )
     computeIntSqrt(vSize);
   if( center != 0 ) {
-//    error("Moving basis not implemented for AnnihilationOperator.");
+    //    error("Moving basis not implemented for AnnihilationOperator.");
     switch( hc ) {
-    case NO_HC:
-      for( i=1; i<vSize; i++ )
-	v[i-1] = center*v[i-1] + intSqrt[i] * v[i];
-      v[vSize-1] = center*v[vSize-1];
-      break;
-    case HC:
-      center = conj(center);
-      for( i=vSize-1; i>0; i-- )
-	v[i] = center*v[i] + intSqrt[i] * v[i-1]; 
-      v[0] = center*v[0];
-      break;
-    default:
-      error("Unknown option AnnihilationOperator::applyTo.");
+      case NO_HC:
+        for( i=1; i<vSize; i++ )
+          v[i-1] = center*v[i-1] + intSqrt[i] * v[i];
+        v[vSize-1] = center*v[vSize-1];
+        break;
+      case HC:
+        center = conj(center);
+        for( i=vSize-1; i>0; i-- )
+          v[i] = center*v[i] + intSqrt[i] * v[i-1];
+        v[0] = center*v[0];
+        break;
+      default:
+        error("Unknown option AnnihilationOperator::applyTo.");
     }
   }
   else {
     switch( hc ) {
-    case NO_HC:
-      for( i=1; i<vSize; i++ )
-	v[i-1] = intSqrt[i] * v[i];
-      v[vSize-1] = 0;
-      break;
-    case HC:
-      for( i=vSize-1; i>0; i-- )
-	v[i] = intSqrt[i] * v[i-1]; 
-      v[0] = 0;
-      break;
-    default:
-      error("Unknown option AnnihilationOperator::applyTo.");
+      case NO_HC:
+        for( i=1; i<vSize; i++ )
+          v[i-1] = intSqrt[i] * v[i];
+        v[vSize-1] = 0;
+        break;
+      case HC:
+        for( i=vSize-1; i>0; i-- )
+          v[i] = intSqrt[i] * v[i-1];
+        v[0] = 0;
+        break;
+      default:
+        error("Unknown option AnnihilationOperator::applyTo.");
     }
   }
 }
@@ -117,27 +117,27 @@ void LocalLower::applyTo(State& v, int hc, double)
 #endif
   int i;
   int vSize = v.size();
-  if( intSqrtSize < vSize ) 
+  if( intSqrtSize < vSize )
     computeIntSqrt(vSize);
   switch( hc ) {
-  case NO_HC:
-    for( i=1; i<vSize; i++ )
-      v[i-1] = intSqrt[i] * v[i];
-    v[vSize-1] = 0;
-    break;
-  case HC:
-    for( i=vSize-1; i>0; i-- )
-      v[i] = intSqrt[i] * v[i-1]; 
-    v[0] = 0;
-    break;
-  default:
-    error("Unknown option LocalLower::applyTo.");
+    case NO_HC:
+      for( i=1; i<vSize; i++ )
+        v[i-1] = intSqrt[i] * v[i];
+      v[vSize-1] = 0;
+      break;
+    case HC:
+      for( i=vSize-1; i>0; i-- )
+        v[i] = intSqrt[i] * v[i-1];
+      v[0] = 0;
+      break;
+    default:
+      error("Unknown option LocalLower::applyTo.");
   }
 }
 
 void NumberOperator::applyTo(State& v, int hc, double)
-//
-// `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
+  //
+  // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
 #ifdef DEBUG_TRACE
   std::cout << "NumberOperator::applyTo entered." << endl;
@@ -145,10 +145,10 @@ void NumberOperator::applyTo(State& v, int hc, double)
   int i;
   Complex center = v.centerCoords();
   int vSize = v.size();
-  if( intSqrtSize < vSize ) 
+  if( intSqrtSize < vSize )
     computeIntSqrt(vSize);
   if( center != 0 ) {
-//    error("Moving basis not implemented for AnnihilationOperator.");
+    //    error("Moving basis not implemented for AnnihilationOperator.");
     Complex previous,temp,vzero,vnth;
     Complex cstar=conj(center);
     double mag=norm(center);
@@ -170,8 +170,8 @@ void NumberOperator::applyTo(State& v, int hc, double)
 }
 
 void XOperator::applyTo(State& v, int hc, double)
-//
-// `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
+  //
+  // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
 #ifdef DEBUG_TRACE
   std::cout << "XOperator::applyTo entered." << endl;
@@ -179,7 +179,7 @@ void XOperator::applyTo(State& v, int hc, double)
   Complex center = v.centerCoords();
   int vSize = v.size();
   Complex previous,temp,vzero,vnth;
-  if( intSqrtSize < vSize ) 
+  if( intSqrtSize < vSize )
     computeIntSqrt(vSize);
   if( center != 0 ) {
     double xcent = intSqrt[2]*real(center);
@@ -209,8 +209,8 @@ void XOperator::applyTo(State& v, int hc, double)
 }
 
 void POperator::applyTo(State& v, int hc, double)
-//
-// `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
+  //
+  // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
 #ifdef DEBUG_TRACE
   std::cout << "XOperator::applyTo entered." << endl;
@@ -219,7 +219,7 @@ void POperator::applyTo(State& v, int hc, double)
   int vSize = v.size();
   Complex previous,temp,vzero,vnth;
   Complex imaginary_unit(0,1);
-  if( intSqrtSize < vSize ) 
+  if( intSqrtSize < vSize )
     computeIntSqrt(vSize);
   if( center != 0 ) {
     double pcent = intSqrt[2]*imag(center);
@@ -256,7 +256,7 @@ void DisplacementOperator::applyTo(State& v, int hc, double)
   int i,j,k,n,m;
   Complex center = v.centerCoords();
   int vSize = v.size();
-  if( intSqrtSize < vSize ) 
+  if( intSqrtSize < vSize )
     computeIntSqrt(vSize);
 
   if( matrixSize < vSize ) {
@@ -265,7 +265,7 @@ void DisplacementOperator::applyTo(State& v, int hc, double)
 #ifndef NON_GNU_DELETE
       delete[] matrix[k];
 #else
-      delete[matrixSize] matrix[k];
+    delete[matrixSize] matrix[k];
 #endif
 #ifndef NON_GNU_DELETE
     delete[] matrix;
@@ -284,47 +284,47 @@ void DisplacementOperator::applyTo(State& v, int hc, double)
     double c = exp( -0.5*nalpha );
     for( n=0; n<matrixSize; n++ ) {
       for( m=0; m<=n; m++ ) {
-	Complex s=c;
-	for( k=0; k<n-m; k++ )
-	  s *= alpha*intSqrt[n-k]/(k+1);
-	Complex sum=s;
-	for( k=1; k<=m; k++ ) {
-	  s *= -nalpha*(m-k+1) / (k*(k+n-m));
-	  sum += s;
-	}
-	matrix[n][m] = sum;
+        Complex s=c;
+        for( k=0; k<n-m; k++ )
+          s *= alpha*intSqrt[n-k]/(k+1);
+        Complex sum=s;
+        for( k=1; k<=m; k++ ) {
+          s *= -nalpha*(m-k+1) / (k*(k+n-m));
+          sum += s;
+        }
+        matrix[n][m] = sum;
       }
     }
     for( n=0; n<matrixSize; n++ ) {
       for( m=n+1; m<matrixSize; m++ ) {
-	if( 2*((m-n)/2) == m-n )
-	  matrix[n][m] = conj(matrix[m][n]);
-	else
-	  matrix[n][m] = -conj(matrix[m][n]);
+        if( 2*((m-n)/2) == m-n )
+          matrix[n][m] = conj(matrix[m][n]);
+        else
+          matrix[n][m] = -conj(matrix[m][n]);
       }
     }
   }
   switch( hc ) {
-  case NO_HC:
-    for( i=0; i<vSize; i++ ) {
-      vv[i] = 0;
-      for( j=0; j<vSize; j++ )
-	vv[i] += matrix[i][j] * v[j];
-    }
-    for( i=0; i<vSize; i++ )
-      v[i] = vv[i];
-    break;
-  case HC:
-    for( i=0; i<vSize; i++ ) {
-      vv[i] = 0;
-      for( j=0; j<vSize; j++ )
-	vv[i] += conj(matrix[j][i]) * v[j];
-    }
-    for( i=0; i<vSize; i++ )
-      v[i] = vv[i];
-    break;
-  default:
-    error("Unknown option DisplacementOperator::applyTo.");
+    case NO_HC:
+      for( i=0; i<vSize; i++ ) {
+        vv[i] = 0;
+        for( j=0; j<vSize; j++ )
+          vv[i] += matrix[i][j] * v[j];
+      }
+      for( i=0; i<vSize; i++ )
+        v[i] = vv[i];
+      break;
+    case HC:
+      for( i=0; i<vSize; i++ ) {
+        vv[i] = 0;
+        for( j=0; j<vSize; j++ )
+          vv[i] += conj(matrix[j][i]) * v[j];
+      }
+      for( i=0; i<vSize; i++ )
+        v[i] = vv[i];
+      break;
+    default:
+      error("Unknown option DisplacementOperator::applyTo.");
   }
   if( center != 0 ) {
     double phi=2*imag(conj(center)*alpha);
@@ -340,7 +340,7 @@ void RealDisplacementOperator::applyTo(State& v, int hc, double)
   int i,j,k,n,m;
   Complex center = v.centerCoords();
   int vSize = v.size();
-  if( intSqrtSize < vSize ) 
+  if( intSqrtSize < vSize )
     computeIntSqrt(vSize);
 
   if( matrixSize < vSize ) {
@@ -349,7 +349,7 @@ void RealDisplacementOperator::applyTo(State& v, int hc, double)
 #ifndef NON_GNU_DELETE
       delete[] matrix[k];
 #else
-      delete[matrixSize] matrix[k];
+    delete[matrixSize] matrix[k];
 #endif
 #ifndef NON_GNU_DELETE
     delete[] matrix;
@@ -368,47 +368,47 @@ void RealDisplacementOperator::applyTo(State& v, int hc, double)
     double c = exp( -0.5*nalpha );
     for( n=0; n<matrixSize; n++ ) {
       for( m=0; m<=n; m++ ) {
-	double s=c;
-	for( k=0; k<n-m; k++ )
-	  s *= alpha*intSqrt[n-k]/(k+1);
-	double sum=s;
-	for( k=1; k<=m; k++ ) {
-	  s *= -nalpha*(m-k+1) / (k*(k+n-m));
-	  sum += s;
-	}
-	matrix[n][m] = sum;
+        double s=c;
+        for( k=0; k<n-m; k++ )
+          s *= alpha*intSqrt[n-k]/(k+1);
+        double sum=s;
+        for( k=1; k<=m; k++ ) {
+          s *= -nalpha*(m-k+1) / (k*(k+n-m));
+          sum += s;
+        }
+        matrix[n][m] = sum;
       }
     }
     for( n=0; n<matrixSize; n++ ) {
       for( m=n+1; m<matrixSize; m++ ) {
-	if( 2*((m-n)/2) == m-n )
-	  matrix[n][m] = matrix[m][n];
-	else
-	  matrix[n][m] = -matrix[m][n];
+        if( 2*((m-n)/2) == m-n )
+          matrix[n][m] = matrix[m][n];
+        else
+          matrix[n][m] = -matrix[m][n];
       }
     }
   }
   switch( hc ) {
-  case NO_HC:
-    for( i=0; i<vSize; i++ ) {
-      vv[i] = 0;
-      for( j=0; j<vSize; j++ )
-	vv[i] += matrix[i][j] * v[j];
-    }
-    for( i=0; i<vSize; i++ )
-      v[i] = vv[i];
-    break;
-  case HC:
-    for( i=0; i<vSize; i++ ) {
-      vv[i] = 0;
-      for( j=0; j<vSize; j++ )
-	vv[i] += matrix[j][i] * v[j];
-    }
-    for( i=0; i<vSize; i++ )
-      v[i] = vv[i];
-    break;
-  default:
-    error("Unknown option RealDisplacementOperator::applyTo.");
+    case NO_HC:
+      for( i=0; i<vSize; i++ ) {
+        vv[i] = 0;
+        for( j=0; j<vSize; j++ )
+          vv[i] += matrix[i][j] * v[j];
+      }
+      for( i=0; i<vSize; i++ )
+        v[i] = vv[i];
+      break;
+    case HC:
+      for( i=0; i<vSize; i++ ) {
+        vv[i] = 0;
+        for( j=0; j<vSize; j++ )
+          vv[i] += matrix[j][i] * v[j];
+      }
+      for( i=0; i<vSize; i++ )
+        v[i] = vv[i];
+      break;
+    default:
+      error("Unknown option RealDisplacementOperator::applyTo.");
   }
   if( center != 0 ) {
     double phi=2*imag(conj(center)*alpha);
