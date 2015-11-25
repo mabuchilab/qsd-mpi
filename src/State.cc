@@ -1,17 +1,17 @@
 //   State.cc -- State algebra in Hilbert space.
-//     
+//
 //   Copyright (C) 1995  Todd Brun and Ruediger Schack
-//   
+//
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
 //   the Free Software Foundation; either version 2 of the License, or
 //   (at your option) any later version.
-//   
+//
 //   This program is distributed in the hope that it will be useful,
 //   but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//   
+//
 //   You should have received a copy of the GNU General Public License
 //   along with this program; if not, write to the Free Software
 //   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -20,7 +20,7 @@
 //   If you improve the code or make additions to it, or if you have
 //   comments or suggestions, please contact us:
 //
-//   Dr. Todd Brun			        Tel    +44 (0)171 775 3292
+//   Dr. Todd Brun              Tel    +44 (0)171 775 3292
 //   Department of Physics                      FAX    +44 (0)181 981 9465
 //   Queen Mary and Westfield College           email  t.brun@qmw.ac.uk
 //   Mile End Road, London E1 4NS, UK
@@ -55,28 +55,28 @@ static void setIntSqrtMax(int maximum)
   int newsize,i;
   double* newPtr;
 
-  if( maximum > intSqrtMax) {			// make sure of size
-    newsize = 2*maximum;			// allow plenty of room
-    newPtr = new double[newsize];		// allocate space
+  if( maximum > intSqrtMax) {      // make sure of size
+    newsize = 2*maximum;      // allow plenty of room
+    newPtr = new double[newsize];    // allocate space
     for (i=0; i<intSqrtMax; i++)
-      newPtr[i] = intSqrtList[i];		// re-use calculated values
+      newPtr[i] = intSqrtList[i];    // re-use calculated values
     for (i=intSqrtMax; i<newsize; i++)
-      newPtr[i] = sqrt(i);			// calculate new values
+      newPtr[i] = sqrt(i);      // calculate new values
 #ifndef NON_GNU_DELETE
-    if(intSqrtList != 0) delete [] intSqrtList;	// recycle memory
+    if(intSqrtList != 0) delete [] intSqrtList;  // recycle memory
 #else // ---- NON GNU CODE ----
     if(intSqrtList != 0) delete [intSqrtMax] intSqrtList; // recycle memory
 #endif // ---- NON GNU CODE ----
-    intSqrtList = newPtr;			// point to new list	
-    intSqrtMax = newsize;			// remember new size
+    intSqrtList = newPtr;      // point to new list
+    intSqrtMax = newsize;      // remember new size
   }
 }
 
 //  I/O operators for enum FreedomType; necessary of I/O of States
 
 std::ostream& operator<<( std::ostream& s, FreedomType theType )
-//
-// Output a FreedomType to an output stream
+  //
+  // Output a FreedomType to an output stream
 {
   switch(theType) {
     case ALL:
@@ -99,8 +99,8 @@ std::ostream& operator<<( std::ostream& s, FreedomType theType )
 }
 
 std::istream& operator>>( std::istream& s, FreedomType& theType )
-//
-// Input a FreedomType from an input stream
+  //
+  // Input a FreedomType from an input stream
 {
   int i;
 
@@ -129,11 +129,11 @@ std::istream& operator>>( std::istream& s, FreedomType& theType )
 // assignment operator.
 
 void State::free() {
-  if( data != 0) {			// if memory is allocated...
+  if( data != 0) {      // if memory is allocated...
 #ifndef NON_GNU_DELETE
-    delete [] data;			// recycle storage
+    delete [] data;      // recycle storage
     if(nFreedoms > 1) {
-      delete [] nDims;			// recycle parameter arrays
+      delete [] nDims;      // recycle parameter arrays
       delete [] sizes;
       delete [] nSkips;
       delete [] partDims;
@@ -141,9 +141,9 @@ void State::free() {
       delete [] coords;
     }
 #else // ---- NON GNU CODE ----
-    delete [totalDim] data;		// NON GNU recycle storage
+    delete [totalDim] data;    // NON GNU recycle storage
     if( nFreedoms > 1 ) {
-      delete [nFreedoms] nDims;		// NON GNU recycle parameter arrays
+      delete [nFreedoms] nDims;    // NON GNU recycle parameter arrays
       delete [nFreedoms] sizes;
       delete [nFreedoms] nSkips;
       delete [nFreedoms] partDims;
@@ -151,14 +151,14 @@ void State::free() {
       delete [nFreedoms] coords;
     }
 #endif // ---- NON GNU CODE ----
-    nFreedoms = 0;			// zero variables
+    nFreedoms = 0;      // zero variables
     totalDim = 0;
     maxSize = 0;
     myType = ALL;
     mySize = 0;
     nSkip = 0;
     coord = 0;
-    myPointer = 0;			// reset pointers to zero
+    myPointer = 0;      // reset pointers to zero
     data = 0;
     nDims = 0;
     sizes = 0;
@@ -169,10 +169,10 @@ void State::free() {
   }
 }
 
-void State::copy(const State& a)	// make a copy of an existing state
+void State::copy(const State& a)  // make a copy of an existing state
 {
   int i;
-  if( nFreedoms != a.nFreedoms) {	// if no memory allocated, allocate it
+  if( nFreedoms != a.nFreedoms) {  // if no memory allocated, allocate it
     nFreedoms = a.nFreedoms;
     if( nFreedoms > 1 ) {
       nDims = new int[nFreedoms];
@@ -183,11 +183,11 @@ void State::copy(const State& a)	// make a copy of an existing state
       coords = new Complex[nFreedoms];
     }
   }
-  if( totalDim != a.totalDim ) {	// if no memory allocated, allocate it
+  if( totalDim != a.totalDim ) {  // if no memory allocated, allocate it
     totalDim = a.totalDim;
     data = new Complex[totalDim];
   }
-  maxSize = a.maxSize;			// copy member data
+  maxSize = a.maxSize;      // copy member data
   nSkip = a.nSkip;
   coord = a.coord;
   mySize = a.mySize;
@@ -208,14 +208,14 @@ void State::copy(const State& a)	// make a copy of an existing state
 }
 
 void State::xerox(const State& a)
-// Unlike copy, xerox makes a copy of an existing state including only
-// the memory which is actually being used, rather than all the memory
-// allocated.  This is useful as a more efficient way of creating
-// temporary states than using the normal copy-constructor.
-//
-// Note that xerox should NOT be used to assign to a state which already
-// has memory allocated.  This results in inefficient memory handling, and
-// might cause errors.
+  // Unlike copy, xerox makes a copy of an existing state including only
+  // the memory which is actually being used, rather than all the memory
+  // allocated.  This is useful as a more efficient way of creating
+  // temporary states than using the normal copy-constructor.
+  //
+  // Note that xerox should NOT be used to assign to a state which already
+  // has memory allocated.  This results in inefficient memory handling, and
+  // might cause errors.
 {
   int i;
 #ifndef OPTIMIZE_QSD
@@ -233,7 +233,7 @@ void State::xerox(const State& a)
   }
   totalDim = a.maxSize;
   data = new Complex[totalDim];
-  maxSize = a.maxSize;			// copy member data
+  maxSize = a.maxSize;      // copy member data
   nSkip = a.nSkip;
   coord = a.coord;
   mySize = a.mySize;
@@ -253,7 +253,7 @@ void State::xerox(const State& a)
   }
 }
 
-State::State() {	// Constructor for uninitialized State
+State::State() {  // Constructor for uninitialized State
   nFreedoms = 0;
   totalDim = 0;
   maxSize = 0;
@@ -271,8 +271,8 @@ State::State() {	// Constructor for uninitialized State
   coord = 0;
 }
 
-State::State(int n, FreedomType form)   	// Constructor for 1D
-{						// ground state
+State::State(int n, FreedomType form)     // Constructor for 1D
+{            // ground state
 #ifndef OPTIMIZE_QSD
   if (n<2) error("Invalid dimension size in State constructor!");
   if( (form==SPIN) && (n != 2) ) error("Spins must have dimension 2!");
@@ -290,19 +290,19 @@ State::State(int n, FreedomType form)   	// Constructor for 1D
   partDims = 0;
   freedomTypes = 0;
   coords = 0;
-  data[0] = 1.0;				// put in the ground state
+  data[0] = 1.0;        // put in the ground state
   for (int i=1; i<totalDim; i++) data[i] = 0;
 }
 
 State::State(int n, int* dimensions, FreedomType* forms) // Constructor for
-{							 // multidimensional
-  int i;						 // ground state
+{               // multidimensional
+  int i;             // ground state
 #ifndef OPTIMIZE_QSD
   if (n<1) error("Illegal number of freedoms in State constructor!");
   if (n=1) error("Do not call this constructor for 1-freedom states!");
 #endif
   nFreedoms = n;
-  nDims = new int[n];			// allocate memory
+  nDims = new int[n];      // allocate memory
   sizes = new int[n];
   nSkips = new int[n];
   partDims = new int[n];
@@ -323,7 +323,7 @@ State::State(int n, int* dimensions, FreedomType* forms) // Constructor for
     coords[i] = 0;
   }
   maxSize = totalDim;
-  data = new Complex[totalDim];		// allocate memory
+  data = new Complex[totalDim];    // allocate memory
   myPointer = data;
   mySize = totalDim;
   nSkip = 1;
@@ -333,31 +333,31 @@ State::State(int n, int* dimensions, FreedomType* forms) // Constructor for
   for (i=1; i<totalDim; i++) data[i] = 0;
 }
 
-State::State(int n, int nstate, FreedomType form)	// Constructor for 
-{							// Fock state
+State::State(int n, int nstate, FreedomType form)  // Constructor for
+{              // Fock state
 #ifndef OPTIMIZE_QSD
   if (n<2) error("Invalid dimension size in State constructor!");
   if( form != FIELD )
     error("Constructor only valid for FIELD type.");
 #endif
   data = 0;
-  fock(n,nstate);		// call Fock state function
+  fock(n,nstate);    // call Fock state function
 }
 
 State::State(int n, Complex alpha, FreedomType form)     // Constructor for
-{							 // coherent state
+{               // coherent state
 #ifndef OPTIMIZE_QSD
   if (n<2) error("Invalid dimension size in State constructor!");
   if( form != FIELD )
     error("Constructor only valid for FIELD type.");
 #endif
   data = 0;
-  coherent(n,alpha);		// call coherent state function
+  coherent(n,alpha);    // call coherent state function
 }
 
 State::State(int n, int nstate, Complex alpha, FreedomType form)
-//
-// Constructor for excited coherent state
+  //
+  // Constructor for excited coherent state
 {
 #ifndef OPTIMIZE_QSD
   if (n<2) error("Invalid dimension size in State constructor!");
@@ -365,13 +365,13 @@ State::State(int n, int nstate, Complex alpha, FreedomType form)
     error("Constructor only valid for FIELD type.");
 #endif
   data = 0;
-  fock(n,nstate);	// call Fock state function
-  coord = alpha;	// displace in phase space
+  fock(n,nstate);  // call Fock state function
+  coord = alpha;  // displace in phase space
 }
 
-State::State(int n, Complex* elements, FreedomType form) 
-//
-// Constructor for general 1 degree of freedom state
+State::State(int n, Complex* elements, FreedomType form)
+  //
+  // Constructor for general 1 degree of freedom state
 {
 #ifndef OPTIMIZE_QSD
   if (n<2) error("Invalid dimension size in State constuctor!");
@@ -393,37 +393,37 @@ State::State(int n, Complex* elements, FreedomType form)
   for (int i=0; i<totalDim; i++) data[i] = elements[i];
 }
 
-State::State(const State& a) 			// Copy-initializer
+State::State(const State& a)       // Copy-initializer
 {
   nFreedoms = 0;
   totalDim = 0;
   copy(a);
 }
 
-State::State(int n, State* stateList)		// Constructor for
-{						// product state
+State::State(int n, State* stateList)    // Constructor for
+{            // product state
 #ifndef OPTIMIZE_QSD
   if (n<1) error("Illegal number of freedoms in State constructor!");
 #endif
   data = 0;
-  productState(n,stateList); 	// call product state function
+  productState(n,stateList);   // call product state function
 }
 
-State::~State() { free(); }		// Destructor
+State::~State() { free(); }    // Destructor
 
-void State::fock(int n, int nstate)	// Create a Fock State
+void State::fock(int n, int nstate)  // Create a Fock State
 {
 #ifndef OPTIMIZE_QSD
-  if( (nstate >= n) || (n < 2) || (nstate < 0) )	// check dimension
-    error("Illegal arguments to State::fock!");		// exit on error
+  if( (nstate >= n) || (n < 2) || (nstate < 0) )  // check dimension
+    error("Illegal arguments to State::fock!");    // exit on error
 #endif
-  free();				// recycle memory
-  totalDim = maxSize = mySize = n;	// set up state
+  free();        // recycle memory
+  totalDim = maxSize = mySize = n;  // set up state
   nFreedoms = 1;
   nSkip = 1;
   coord = 0;
   myType = FIELD;
-  data = new Complex[totalDim];		// allocate memory
+  data = new Complex[totalDim];    // allocate memory
   myPointer = data;
   nDims = 0;
   sizes = 0;
@@ -432,25 +432,25 @@ void State::fock(int n, int nstate)	// Create a Fock State
   freedomTypes = 0;
   coords = 0;
   for (int i=0; i<totalDim; i++) data[i] = 0;
-  data[nstate] = 1;					// Fock state
+  data[nstate] = 1;          // Fock state
 }
 
-void State::coherent(int n, Complex alpha)	// Create a coherent state
+void State::coherent(int n, Complex alpha)  // Create a coherent state
 {
 #ifndef OPTIMIZE_QSD
   if( n < 2 )
-    error("Invalid state size in State::coherent!");	 // exit on error
+    error("Invalid state size in State::coherent!");   // exit on error
   if( norm(alpha) > n )
     error("Coherent state too big for storage in State::coherent!");
 #endif
   Complex z;
-  free();				// recycle memory
-  totalDim = maxSize = mySize = n;	// set up state
+  free();        // recycle memory
+  totalDim = maxSize = mySize = n;  // set up state
   nFreedoms = 1;
   nSkip = 1;
   coord = 0;
   myType = FIELD;
-  data = new Complex[totalDim];		// allocate memory
+  data = new Complex[totalDim];    // allocate memory
   myPointer = data;
   nDims = 0;
   sizes = 0;
@@ -458,14 +458,14 @@ void State::coherent(int n, Complex alpha)	// Create a coherent state
   partDims = 0;
   freedomTypes = 0;
   coords = 0;
-  z = exp( - 0.5*norm(alpha));		// normalization factor
+  z = exp( - 0.5*norm(alpha));    // normalization factor
   for (int i=0; i<totalDim; i++) {
-    data[i] = z;			// coherent state elements
+    data[i] = z;      // coherent state elements
     z *= alpha/sqrt(i+1);
   }
 }
 
-void State::productState(int n, State* stateList)	// Create a product state
+void State::productState(int n, State* stateList)  // Create a product state
 {
   int i,j,k,l;
   Complex element;
@@ -474,14 +474,14 @@ void State::productState(int n, State* stateList)	// Create a product state
 #endif
   free();
   nFreedoms = n;
-  nDims = new int[n];			// allocate memory
+  nDims = new int[n];      // allocate memory
   sizes = new int[n];
   nSkips = new int[n];
   partDims = new int[n];
   freedomTypes = new FreedomType[n];
   coords = new Complex[n];
   totalDim = 1;
-  for (i=0; i<n; i++) {			// set up memory structure for data
+  for (i=0; i<n; i++) {      // set up memory structure for data
 #ifndef OPTIMIZE_QSD
     if( stateList[i].nFreedoms != 1 )
       error("Can only produce products of 1D states!");
@@ -497,7 +497,7 @@ void State::productState(int n, State* stateList)	// Create a product state
   }
   mySize = totalDim;
   maxSize = totalDim;
-  nSkip = 1;				// initialize state variables
+  nSkip = 1;        // initialize state variables
   coord = coords[0];
   myType = freedomTypes[0];
   data = new Complex[totalDim];
@@ -506,26 +506,26 @@ void State::productState(int n, State* stateList)	// Create a product state
     k = i;
     element = 1;
     for (j=n-1; j>=0; j--) {
-      l = k/nSkips[j];			// index i_j of jth state
-      element *= stateList[j][l];	// product state
-      if( element == 0 ) break;		// if zero, leave this inner loop
+      l = k/nSkips[j];      // index i_j of jth state
+      element *= stateList[j][l];  // product state
+      if( element == 0 ) break;    // if zero, leave this inner loop
       k %= nSkips[j];
     }
-    data[i] = element;	// psi_1[i_1]*psi_2[i_2]*psi_3[i_3]*...*psi_n[i_n]
+    data[i] = element;  // psi_1[i_1]*psi_2[i_2]*psi_3[i_3]*...*psi_n[i_n]
   }
 }
 
-State& State::operator=(const State& a)		// assignment operator
+State& State::operator=(const State& a)    // assignment operator
 {
-  if (this != &a) {	// otherwise a=a would lead to trouble
+  if (this != &a) {  // otherwise a=a would lead to trouble
     if( (totalDim != a.totalDim) || (nFreedoms != a.nFreedoms) )
-      free();		// recycle any memory
-    copy(a);		// copy a into b
+      free();    // recycle any memory
+    copy(a);    // copy a into b
   }
   return *this;
 }
 
-State& State::operator=(int n)		// assign zero operator
+State& State::operator=(int n)    // assign zero operator
 {
   if (n != 0) error("Cannot assign a State a value other than zero!");
   for (int i=0; i<maxSize; i++) data[i] = 0;
@@ -533,14 +533,14 @@ State& State::operator=(int n)		// assign zero operator
 }
 
 Complex& State::operator[](int* indexList)
-//
-// Multiple degree of freedom subscript operator
-// DO NOT USE THIS WITH UNNAMED TEMPORARIES
-//
+  //
+  // Multiple degree of freedom subscript operator
+  // DO NOT USE THIS WITH UNNAMED TEMPORARIES
+  //
 {
   int i,j=0;
   if (nFreedoms == 1)
-    return data[indexList[0]];		// 1 degree of freedom case...
+    return data[indexList[0]];    // 1 degree of freedom case...
   for (i=0; i<nFreedoms; i++) j += indexList[i]*nSkips[i];
 #ifndef OPTIMIZE_QSD
   if( (j>maxSize) || (j < 0) )
@@ -558,7 +558,7 @@ Complex State::elem(const int* indexList) const
 {
   int i,j=0;
   if (nFreedoms == 1)
-    return data[indexList[0]];		// 1 degree of freedom case...
+    return data[indexList[0]];    // 1 degree of freedom case...
   for (i=0; i<nFreedoms; i++) j += indexList[i]*nSkips[i];
 #ifndef OPTIMIZE_QSD
   if( (j>maxSize) || (j < 0) )
@@ -567,7 +567,7 @@ Complex State::elem(const int* indexList) const
   return data[j];
 }
 
-Complex State::operator*(const State& a) const		// inner product
+Complex State::operator*(const State& a) const    // inner product
 {
 #ifndef OPTIMIZE_QSD
   if( mySize != a.mySize )
@@ -582,7 +582,7 @@ Complex State::operator*(const State& a) const		// inner product
   return sum;
 }
 
-State& State::operator*=(const Complex& z)	// multiplication by Complex
+State& State::operator*=(const Complex& z)  // multiplication by Complex
 {
   int i,j;
   for (i=0,j=0; i<mySize; i++,j+=nSkip)
@@ -590,7 +590,7 @@ State& State::operator*=(const Complex& z)	// multiplication by Complex
   return *this;
 }
 
-State& State::operator*=(double x)		// multiplication by real
+State& State::operator*=(double x)    // multiplication by real
 {
   int i,j;
   for (i=0,j=0; i<mySize; i++,j+=nSkip)
@@ -598,7 +598,7 @@ State& State::operator*=(double x)		// multiplication by real
   return *this;
 }
 
-State& State::operator*=(ImaginaryUnit im)	// multiplication by i or -i
+State& State::operator*=(ImaginaryUnit im)  // multiplication by i or -i
 {
   int i,j;
   if( im == IM )
@@ -608,7 +608,7 @@ State& State::operator*=(ImaginaryUnit im)	// multiplication by i or -i
   return *this;
 }
 
-State& State::operator+=(const State& a)	// add state
+State& State::operator+=(const State& a)  // add state
 {
 #ifndef OPTIMIZE_QSD
   if( mySize != a.mySize )
@@ -622,7 +622,7 @@ State& State::operator+=(const State& a)	// add state
   return *this;
 }
 
-State& State::operator-=(const State& a)	// subtract state
+State& State::operator-=(const State& a)  // subtract state
 {
 #ifndef OPTIMIZE_QSD
   if( mySize != a.mySize )
@@ -636,7 +636,7 @@ State& State::operator-=(const State& a)	// subtract state
   return *this;
 }
 
-void State::normalize()			// normalize state to 1
+void State::normalize()      // normalize state to 1
 {
   int i;
   double sum=0.0;
@@ -645,7 +645,7 @@ void State::normalize()			// normalize state to 1
   for (i=0; i<maxSize; i++) {
     sum += norm(data[i]);
   }
-  if(sum > epsLimit ) {			// check if zero state...
+  if(sum > epsLimit ) {      // check if zero state...
     sum = 1.0/sqrt(sum);
     for (i=0; i<maxSize; i++)
       data[i] *= sum;
@@ -653,10 +653,10 @@ void State::normalize()			// normalize state to 1
 }
 
 double State::checkBounds(int theFreedom, int numChecks)
-//
-// Check how much probability is in the top numChecks levels
-// of the degree of freedom theFreedom.
-//
+  //
+  // Check how much probability is in the top numChecks levels
+  // of the degree of freedom theFreedom.
+  //
 {
 #ifndef OPTIMIZE_QSD
   if( (theFreedom < 0) || (theFreedom >= nFreedoms) )
@@ -668,28 +668,28 @@ double State::checkBounds(int theFreedom, int numChecks)
 #endif
   double sum = 0.0;
   int i,j,k,l;
-  if( nFreedoms == 1) {				// 1 freedom case
+  if( nFreedoms == 1) {        // 1 freedom case
     for(i=1; i<=numChecks; i++) {
-      sum += norm(data[maxSize - i]);		// add up probability
+      sum += norm(data[maxSize - i]);    // add up probability
     }
   }
-  else {					// multi-freedom case
+  else {          // multi-freedom case
     int theSkip = nSkips[theFreedom];
     int theBound = (sizes[theFreedom] - 1)*theSkip;
     int theDim = partDims[theFreedom];
-    for(i=0; i<theSkip; i++)			// loop over other indices
-    for(j=0; j<maxSize; j+=theDim)
-    for(k=0,l=theBound; k<numChecks; k++,l-=theSkip) {
-      sum += norm(data[i+j+l]);			// add up probability
-    }
+    for(i=0; i<theSkip; i++)      // loop over other indices
+      for(j=0; j<maxSize; j+=theDim)
+        for(k=0,l=theBound; k<numChecks; k++,l-=theSkip) {
+          sum += norm(data[i+j+l]);      // add up probability
+        }
   }
   return sum;
 }
 
 void State::fullSize()
-//
-// Makes the cutoffs of the state match the physical size in memory
-//
+  //
+  // Makes the cutoffs of the state match the physical size in memory
+  //
 {
   if( nFreedoms == 1 ) {
     for (int i=maxSize; i<totalDim; i++)
@@ -704,14 +704,14 @@ void State::fullSize()
 }
 
 void State::adjustCutoff(int theFreedom, double epsilon, int padSize)
-//
-// This member function adjusts the amount of memory actually being
-// used by a State.  As very frequently only the lowest few states have
-// significant probability, it is more efficient not to loop over the
-// top states at all.  This routine eliminates the top N states (which
-// contain total probability less than epsilon) with a pad of size padSize
-// for safety.
-//
+  //
+  // This member function adjusts the amount of memory actually being
+  // used by a State.  As very frequently only the lowest few states have
+  // significant probability, it is more efficient not to loop over the
+  // top states at all.  This routine eliminates the top N states (which
+  // contain total probability less than epsilon) with a pad of size padSize
+  // for safety.
+  //
 {
 #ifndef OPTIMIZE_QSD
   if( (theFreedom < 0) || (theFreedom >= nFreedoms) )
@@ -730,33 +730,33 @@ void State::adjustCutoff(int theFreedom, double epsilon, int padSize)
 #endif
   double sum = 0.0;
   int i,j,l;
-  normalize();				// make sure total prob. is 1
-  if( nFreedoms == 1) {			// 1 freedom case
+  normalize();        // make sure total prob. is 1
+  if( nFreedoms == 1) {      // 1 freedom case
     for(i=maxSize; sum < epsilon;)
-      sum += norm(data[--i]);		// add up probability
+      sum += norm(data[--i]);    // add up probability
     i += (padSize + 1);
-    if( i > totalDim ) {		// enough states allocated?
+    if( i > totalDim ) {    // enough states allocated?
       std::cerr << "Warning!  Significant probability in top states!" << std::endl;
       i = totalDim;
     }
-    if( i > maxSize )				// stretch # of states;
-      for(j=maxSize; j<i; j++) data[j] = 0;	// zero top states
+    if( i > maxSize )        // stretch # of states;
+    for(j=maxSize; j<i; j++) data[j] = 0;  // zero top states
     maxSize = i;
     mySize = maxSize;
   }
-  else {				// multi-freedom case
+  else {        // multi-freedom case
     int theSkip = nSkips[theFreedom];
     int theBound = (sizes[theFreedom] - 1)*theSkip;
     int theDim = partDims[theFreedom];
     int k;
-// sum over other indices
+    // sum over other indices
     for(k=sizes[theFreedom],l=theBound; sum < epsilon; k--,l-=theSkip)
-    for(i=0; i<theSkip; i++)
-    for(j=0; j<maxSize; j+=theDim) {
-      sum += norm(data[i+j+l]);		// add up probability
-    }
+      for(i=0; i<theSkip; i++)
+        for(j=0; j<maxSize; j+=theDim) {
+          sum += norm(data[i+j+l]);    // add up probability
+        }
     k += (padSize + 1);
-    if( k > nDims[theFreedom] ) {	// enough states allocated?
+    if( k > nDims[theFreedom] ) {  // enough states allocated?
       std::cerr << "Warning!  Significant probabilty in top states!" << std::endl;
       std::cerr << "k = " << k << std::endl;
       k = nDims[theFreedom];
@@ -767,64 +767,64 @@ void State::adjustCutoff(int theFreedom, double epsilon, int padSize)
 }
 
 void State::stretchFreedom(int theFreedom, int theSize)
-//
-// If the space being used for a degree of freedom is not sufficient to
-// avoid truncation errors, stretch the available memory.
-//
+  //
+  // If the space being used for a degree of freedom is not sufficient to
+  // avoid truncation errors, stretch the available memory.
+  //
 {
   int i,j,k;
   int newDim,newSize;
 
-// Stretch the data into a larger space
-  newDim = nSkips[theFreedom]*theSize;		// new partial dimension
-  newSize = theSize*maxSize/sizes[theFreedom];	// new total size
+  // Stretch the data into a larger space
+  newDim = nSkips[theFreedom]*theSize;    // new partial dimension
+  newSize = theSize*maxSize/sizes[theFreedom];  // new total size
   for(i=maxSize-partDims[theFreedom],j=newSize-newDim; i>=0;
-       i-=partDims[theFreedom],j-=newDim) {
+      i-=partDims[theFreedom],j-=newDim) {
     for(k=partDims[theFreedom]-1; k>=0; k--)
-      data[j+k] = data[i+k];			// stretch data
+      data[j+k] = data[i+k];      // stretch data
     for(k=newDim-1; k>=partDims[theFreedom]; k--)
-      data[j+k] = 0;				// fill empty spaces w/zero
+      data[j+k] = 0;        // fill empty spaces w/zero
   }
-// Recompute nSkips and partDims
-  sizes[theFreedom] = theSize;			// size of freedom
+  // Recompute nSkips and partDims
+  sizes[theFreedom] = theSize;      // size of freedom
   partDims[theFreedom] = newDim;
-  maxSize = newSize;				// total size used
+  maxSize = newSize;        // total size used
   for(i=theFreedom+1; i<nFreedoms; i++) {
-    nSkips[i] = partDims[i-1];			// new nSkips
-    partDims[i] = nSkips[i]*sizes[i];		// new partDims
+    nSkips[i] = partDims[i-1];      // new nSkips
+    partDims[i] = nSkips[i]*sizes[i];    // new partDims
   }
   mySize = maxSize;
 }
 
 void State::shrinkFreedom(int theFreedom, int theSize)
-//
-// If more memory is being used than is necessary to avoid truncation
-// error, shrink memory used by freedom.
-//
+  //
+  // If more memory is being used than is necessary to avoid truncation
+  // error, shrink memory used by freedom.
+  //
 {
   int i,j,k;
   int newDim,newSize;
 
-// Compact the data into a smaller space
-  newDim = nSkips[theFreedom]*theSize;		// new partial dimension
-  newSize = theSize*maxSize/sizes[theFreedom];	// new total size
+  // Compact the data into a smaller space
+  newDim = nSkips[theFreedom]*theSize;    // new partial dimension
+  newSize = theSize*maxSize/sizes[theFreedom];  // new total size
   for(i=0,j=0; i<maxSize; i+=partDims[theFreedom],j+=newDim) //old and new outer indices
-  for(k=0; k<newDim; k++)			// inner indices
-    data[j+k] = data[i+k];			// compact data
-// Pad out the empty space with zeros
+    for(k=0; k<newDim; k++)      // inner indices
+      data[j+k] = data[i+k];      // compact data
+  // Pad out the empty space with zeros
   for(i=newSize; i<maxSize; i++) data[i] = 0;
-// Recompute nSkips and partDims
-  sizes[theFreedom] = theSize;			// size of freedom
+  // Recompute nSkips and partDims
+  sizes[theFreedom] = theSize;      // size of freedom
   partDims[theFreedom] = newDim;
-  maxSize = newSize;				// total size used
+  maxSize = newSize;        // total size used
   for(i=theFreedom+1; i<nFreedoms; i++) {
-    nSkips[i] = partDims[i-1];			// new nSkips
-    partDims[i] = nSkips[i]*sizes[i];		// new partDims
+    nSkips[i] = partDims[i-1];      // new nSkips
+    partDims[i] = nSkips[i]*sizes[i];    // new partDims
   }
   mySize = maxSize;
 }
 
-void State::diagnostic()	// for debugging
+void State::diagnostic()  // for debugging
 {
   int i;
   std::cout << "Number of Freedoms " << nFreedoms << ".\n";
@@ -858,9 +858,9 @@ void State::diagnostic()	// for debugging
 // Friend I/O functions
 
 std::ostream& operator<<( std::ostream& s, const State& a )
-//
-// Output a State to an output stream
-//
+  //
+  // Output a State to an output stream
+  //
 {
   int i;
 
@@ -886,13 +886,13 @@ std::ostream& operator<<( std::ostream& s, const State& a )
 }
 
 std::istream& operator>>( std::istream& s, State& a )
-//
-// Input a State from an input stream
-//
+  //
+  // Input a State from an input stream
+  //
 {
   int i;
 
-  a.free();			// free up State
+  a.free();      // free up State
   s >> a.nFreedoms;
   s >> a.totalDim;
   s >> a.maxSize;
@@ -930,29 +930,29 @@ std::istream& operator>>( std::istream& s, State& a )
 void State::apply(PrimaryOperator& theOp, int hc, int theFreedom, FreedomType theType, double t)
 {
   int i,j;
-  if( nFreedoms == 1 ) {		// 1 freedom case
+  if( nFreedoms == 1 ) {    // 1 freedom case
 #ifndef OPTIMIZE_QSD
     if( (theType != myType) && (theType != ALL) )
       error("Incompatible operator type in State::apply!");
 #endif
     theOp.applyTo(*this,hc,t);
   }
-  else {				// multi-freedom case
+  else {        // multi-freedom case
 #ifndef OPTIMIZE_QSD
     if( (theFreedom < 0) || (theFreedom >= nFreedoms) )
       error("Illegal degree of freedom requested in State::apply!");
     if( (theType != freedomTypes[theFreedom]) && (theType != ALL) )
       error("Incompatible operator type in State::apply!");
 #endif
-    mySize = sizes[theFreedom];		// set up 1D state for PrimaryOperator
+    mySize = sizes[theFreedom];    // set up 1D state for PrimaryOperator
     nSkip = nSkips[theFreedom];
     coord = coords[theFreedom];
-    for (i=0; i<nSkip; i++) {				// loop over inner and
-    for (j=0; j<maxSize; j += partDims[theFreedom]) {	// outer indices
-      myPointer = data + i + j;
-      if( i+j > maxSize ) error("Gone off end of array!");
-      theOp.applyTo(*this,hc,t);
-    } }
+    for (i=0; i<nSkip; i++) {        // loop over inner and
+      for (j=0; j<maxSize; j += partDims[theFreedom]) {  // outer indices
+        myPointer = data + i + j;
+        if( i+j > maxSize ) error("Gone off end of array!");
+        theOp.applyTo(*this,hc,t);
+      } }
     mySize = maxSize;
     nSkip = 1;
     coord = coords[0];
@@ -960,58 +960,58 @@ void State::apply(PrimaryOperator& theOp, int hc, int theFreedom, FreedomType th
   }
 }
 
-State operator*(const Complex& a, const State& b) {	// multiplication
+State operator*(const Complex& a, const State& b) {  // multiplication
   State result(b);
   return (result *= a);
 }
 
-State operator*(const State& b, const Complex& a) {	// multiplication
+State operator*(const State& b, const Complex& a) {  // multiplication
   State result(b);
   return (result *= a);
 }
 
-State operator*(double a, const State& b) {		// multiplication
+State operator*(double a, const State& b) {    // multiplication
   State result(b);
   return (result *= a);
 }
 
-State operator*(const State& b, double a) {		// multiplication
+State operator*(const State& b, double a) {    // multiplication
   State result(b);
   return (result *= a);
 }
 
-State operator*(ImaginaryUnit a, const State& b) {	// multiplication
+State operator*(ImaginaryUnit a, const State& b) {  // multiplication
   State result(b);
   return (result *= a);
 }
 
-State operator*(const State& b, ImaginaryUnit a) {	// multiplication
+State operator*(const State& b, ImaginaryUnit a) {  // multiplication
   State result(b);
   return (result *= a);
 }
 
-State operator+(const State& a, const State& b) {	// addition
+State operator+(const State& a, const State& b) {  // addition
   State result(a);
   return (result += b);
 }
 
-State operator-(const State& a, const State& b) {	// subtraction
+State operator-(const State& a, const State& b) {  // subtraction
   State result(a);
   return (result -= b);
 }
 
-State operator+(const State& a) {			// unary +
+State operator+(const State& a) {      // unary +
   State result(a);
   return result;
 }
 
-State operator-(const State& a) {			// unary -
+State operator-(const State& a) {      // unary -
   State result(a);
   for (int i=0; i<result.maxSize; i++) result.data[i] = - result.data[i];
   return result;
 }
 
-int State::size() { return mySize; }	// return state size
+int State::size() { return mySize; }  // return state size
 
 int State::getSize(int theFreedom)
 {
@@ -1022,7 +1022,7 @@ int State::getSize(int theFreedom)
   return sizes[theFreedom];
 }
 
-Complex State::centerCoords() { return coord; }	// return center of coordinates
+Complex State::centerCoords() { return coord; }  // return center of coordinates
 
 Complex State::getCoords(int theFreedom)
 {
@@ -1035,8 +1035,8 @@ Complex State::getCoords(int theFreedom)
 }
 
 void State::setCoords(Complex& alpha, int theFreedom)
-//
-// Reset the value of the phase space coordinate for a freedom.
+  //
+  // Reset the value of the phase space coordinate for a freedom.
 {
 #ifndef OPTIMIZE_QSD
   if( (theFreedom<0) || (theFreedom >= nFreedoms) )
@@ -1051,8 +1051,8 @@ void State::setCoords(Complex& alpha, int theFreedom)
 }
 
 void State::displaceCoords(Complex& alpha, int theFreedom)
-//
-// Reset the value of the phase space coordinate for a freedom.
+  //
+  // Reset the value of the phase space coordinate for a freedom.
 {
 #ifndef OPTIMIZE_QSD
   if( (theFreedom<0) || (theFreedom >= nFreedoms) )
@@ -1134,30 +1134,30 @@ void State::recenter(int theFreedom, double shiftAccuracy)
   Complex magnitude, alpha;
   magnitude = (*this)*(*this);
   if( magnitude == 0 ) error("Can't recenter zero state!");
-  if( nFreedoms == 1 ) {		// 1 freedom case
+  if( nFreedoms == 1 ) {    // 1 freedom case
     if( mySize > intSqrtMax ) setIntSqrtMax(mySize);
-    for (k=1; k<mySize; k++)	// apply local annihilation op.
+    for (k=1; k<mySize; k++)  // apply local annihilation op.
       dummy.myPointer[k-1] = intSqrtList[k]*dummy.myPointer[k];
     dummy.myPointer[mySize-1] = 0;
   }
-  else {				// multi-freedom case
+  else {        // multi-freedom case
     mySize = sizes[theFreedom];
     nSkip = nSkips[theFreedom];
     if( mySize > intSqrtMax ) setIntSqrtMax(mySize);
-    for (i=0; i<nSkip; i++)		// apply local annihilation op
-    for (j=0; j<maxSize; j+=partDims[theFreedom]) {	// loop over other
-      dummy.myPointer = dummy.data + i + j;		// indices
-      for (k=1,l=nSkip; k<mySize; k++,l+=nSkip)
-        dummy.myPointer[l-nSkip] = intSqrtList[k]*dummy.myPointer[l];
-      dummy.myPointer[(mySize-1)*nSkip] = 0;
-    }
+    for (i=0; i<nSkip; i++)    // apply local annihilation op
+      for (j=0; j<maxSize; j+=partDims[theFreedom]) {  // loop over other
+        dummy.myPointer = dummy.data + i + j;    // indices
+        for (k=1,l=nSkip; k<mySize; k++,l+=nSkip)
+          dummy.myPointer[l-nSkip] = intSqrtList[k]*dummy.myPointer[l];
+        dummy.myPointer[(mySize-1)*nSkip] = 0;
+      }
     mySize = maxSize;
     nSkip = 1;
     dummy.myPointer = dummy.data;
   }
-  alpha = - ((*this)*dummy)/magnitude;	// get relative coords in phase space
+  alpha = - ((*this)*dummy)/magnitude;  // get relative coords in phase space
   if( abs(alpha) > shiftAccuracy )
-    moveCoords(alpha,theFreedom, shiftAccuracy);	// shift basis
+    moveCoords(alpha,theFreedom, shiftAccuracy);  // shift basis
 }
 
 // Move the center of coordinates by a displacement alpha in
@@ -1170,7 +1170,7 @@ void State::moveCoords(const Complex& alpha, int theFreedom, double shiftAccurac
     error("Illegal freedom passed to State::moveCoords!");
 #endif
   Complex mag=(*this)*(*this);
-  if( mag == 0 ) {				// move zero state
+  if( mag == 0 ) {        // move zero state
     if( nFreedoms == 1 ) coord -= alpha;
     if( nFreedoms > 1 ) {
       coords[theFreedom] -= alpha;
@@ -1178,25 +1178,25 @@ void State::moveCoords(const Complex& alpha, int theFreedom, double shiftAccurac
     }
     return;
   }
-  int numshifts;				// Break basis shift into
-  numshifts = int(abs(alpha)/shiftAccuracy)+1;	// sequence of small shifts
-  Complex delta=alpha/numshifts;		// according to accuracy
-  Complex deltacc=conj(delta);			// requirement.
+  int numshifts;        // Break basis shift into
+  numshifts = int(abs(alpha)/shiftAccuracy)+1;  // sequence of small shifts
+  Complex delta=alpha/numshifts;    // according to accuracy
+  Complex deltacc=conj(delta);      // requirement.
   Complex theCoord, phase=0;
-  if (nFreedoms == 1) {				// 1 freedom case
+  if (nFreedoms == 1) {        // 1 freedom case
 #ifndef OPTIMIZE_QSD
     if( myType != FIELD) error("Can only move coordinates for FIELD type.");
 #endif
     theCoord = coord;
     if( mySize > intSqrtMax) setIntSqrtMax(mySize);
     for (int i=0; i<numshifts; i++) {
-      moveStep(delta,deltacc);			// 1 small shift
-      phase += imag(delta*conj(theCoord));	// sum up phase changes
+      moveStep(delta,deltacc);      // 1 small shift
+      phase += imag(delta*conj(theCoord));  // sum up phase changes
       theCoord -= delta;
     }
     coord = theCoord;
   }
-  else {					// multi-freedom case
+  else {          // multi-freedom case
 #ifndef OPTIMIZE_QSD
     if( freedomTypes[theFreedom] != FIELD )
       error("Can only move coordinates for FIELD type.");
@@ -1206,12 +1206,12 @@ void State::moveCoords(const Complex& alpha, int theFreedom, double shiftAccurac
     theCoord = coords[theFreedom];
     if( mySize > intSqrtMax) setIntSqrtMax(mySize);
     for (int i=0; i<numshifts; i++) {
-      for (int j=0; j<nSkip; j++)		// loop over other indices
-      for (int k=0; k<maxSize; k+=partDims[theFreedom]) {
-        myPointer = data + j + k;
-        moveStep(delta,deltacc);		// 1 small shift
-      }
-      phase += imag(delta*conj(theCoord));	// sum up phase changes
+      for (int j=0; j<nSkip; j++)    // loop over other indices
+        for (int k=0; k<maxSize; k+=partDims[theFreedom]) {
+          myPointer = data + j + k;
+          moveStep(delta,deltacc);    // 1 small shift
+        }
+      phase += imag(delta*conj(theCoord));  // sum up phase changes
       theCoord -= delta;
     }
     coords[theFreedom] = theCoord;
@@ -1221,8 +1221,8 @@ void State::moveCoords(const Complex& alpha, int theFreedom, double shiftAccurac
     nSkip = 1;
   }
   phase.timesI();
-  (*this) *= exp(phase);			// remove phase change
-  normalize();					// normalize state
+  (*this) *= exp(phase);      // remove phase change
+  normalize();          // normalize state
 }
 
 // Shift the center of coordinates by a single infinitesimal step
@@ -1234,8 +1234,8 @@ void State::moveStep(Complex& delta, Complex& deltacc)
   psizero = (*this)[0] - deltacc*(*this)[1];
   psinth = (*this)[mySize-1] + delta*intSqrtList[mySize-1]*(*this)[mySize-2];
   previous = (*this)[0];
-  for (i=1,j=nSkip; i<(mySize-1); i++,j+=nSkip) {	// infinitesimal
-    temp = myPointer[j];				// displacement
+  for (i=1,j=nSkip; i<(mySize-1); i++,j+=nSkip) {  // infinitesimal
+    temp = myPointer[j];        // displacement
     myPointer[j] += delta*intSqrtList[i]*previous;
     myPointer[j] -= deltacc*intSqrtList[i+1]*myPointer[j+nSkip];
     previous = temp;
@@ -1244,7 +1244,7 @@ void State::moveStep(Complex& delta, Complex& deltacc)
   (*this)[mySize-1] = psinth;
 }
 
-void State::error(const char* message) const	// error handling
+void State::error(const char* message) const  // error handling
 {
   std::cerr << message << "\n";
   exit(1);
