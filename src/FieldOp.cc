@@ -64,6 +64,41 @@ static void computeIntSqrt(int newSize)
   }
 }
 
+void FieldTransitionOperator::applyTo(State& v, int hc, double)
+//  |i><j|  (Transition from |j> to |i>)
+{
+  int vSize = v.size();  // v.size() is the number of elements of the vector v.
+#ifndef OPTIMIZE_QSD
+  if ( i >= vSize || j >= vSize || i < 0 || j < 0 )
+    error("Transition out of range in FieldTransitionOperator::applyTo.");
+#endif
+  int k;
+  Complex center = v.centerCoords();
+  if( center != 0 ) {
+    error("FieldTransitionOperator is incompatible with moving basis.");
+  }
+  else {
+    switch( hc ) {
+    case NO_HC:
+      v[i] = v[j];
+      for( k=0; k<i; k++ )
+        v[k] = 0;
+      for( k=i+1; k<vSize; k++ )
+        v[k] = 0;
+      break;
+    case HC:
+      v[j] = v[i];
+      for( k=0; k<j; k++ )
+        v[k] = 0;
+      for( k=j+1; k<vSize; k++ )
+        v[k] = 0;
+      break;
+    default:
+      error("Unknown option in FieldTransitionOperator::applyTo.");
+    }
+  }
+}
+
 void AnnihilationOperator::applyTo(State& v, int hc, double)
 {
 #ifdef DEBUG_TRACE

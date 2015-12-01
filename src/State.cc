@@ -740,7 +740,7 @@ void State::adjustCutoff(int theFreedom, double epsilon, int padSize)
       i = totalDim;
     }
     if( i > maxSize )        // stretch # of states;
-    for(j=maxSize; j<i; j++) data[j] = 0;  // zero top states
+      for(j=maxSize; j<i; j++) data[j] = 0;  // zero top states
     maxSize = i;
     mySize = maxSize;
   }

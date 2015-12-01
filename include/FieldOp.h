@@ -36,6 +36,21 @@
 
 #include "PrimOp.h"
 
+class FieldTransitionOperator: public PrimaryOperator
+//  |i><j|  (Transition from |j> to |i>)
+{
+public:
+  FieldTransitionOperator() : PrimaryOperator(0,FIELD) { i=0; j=0; };
+  FieldTransitionOperator(int thei, int thej, int freedom=0) :
+    PrimaryOperator(freedom,FIELD) {
+      i=thei; j=thej;
+  };
+  virtual void applyTo(State&,int,double);
+private:
+  int i;
+  int j;
+};
+
 class AnnihilationOperator: public PrimaryOperator
 {
   public:
