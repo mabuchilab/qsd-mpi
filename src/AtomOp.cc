@@ -1,17 +1,17 @@
 //   AtomOp.cc -- Operators for an atom or N-level system
-//     
+//
 //   Copyright (C) 1995  Todd Brun and Ruediger Schack
-//   
+//
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
 //   the Free Software Foundation; either version 2 of the License, or
 //   (at your option) any later version.
-//   
+//
 //   This program is distributed in the hope that it will be useful,
 //   but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//   
+//
 //   You should have received a copy of the GNU General Public License
 //   along with this program; if not, write to the Free Software
 //   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -40,6 +40,9 @@ static const char rcsid[] = "$Id: AtomOp.cc,v 3.1 1996/11/19 10:05:08 rschack Ex
 void TransitionOperator::applyTo(State& v, int hc, double)
 //  |i><j|  (Transition from |j> to |i>)
 {
+#ifdef DEBUG_TRACE
+  std::cout << "TransitionOperator(freedom="<<getFreedom()<<", i="<<i<<", j="<<j<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
+#endif
   int vSize = v.size();  // v.size() is the number of elements of the vector v.
 #ifndef OPTIMIZE_QSD
   if ( i >= vSize || j >= vSize || i < 0 || j < 0 )

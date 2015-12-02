@@ -67,6 +67,9 @@ static void computeIntSqrt(int newSize)
 void FieldTransitionOperator::applyTo(State& v, int hc, double)
 //  |i><j|  (Transition from |j> to |i>)
 {
+#ifdef DEBUG_TRACE
+  std::cout << "FieldTransitionOperator(freedom="<<getFreedom()<<", i="<<i<<", j="<<j<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
+#endif
   int vSize = v.size();  // v.size() is the number of elements of the vector v.
 #ifndef OPTIMIZE_QSD
   if ( i >= vSize || j >= vSize || i < 0 || j < 0 )
@@ -102,7 +105,7 @@ void FieldTransitionOperator::applyTo(State& v, int hc, double)
 void AnnihilationOperator::applyTo(State& v, int hc, double)
 {
 #ifdef DEBUG_TRACE
-  std::cout << "AnnihilationOperator::applyTo entered." << endl;
+  std::cout << "AnnihilationOperator(freedom="<<getFreedom()<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
 #endif
   int i;
   Complex center = v.centerCoords();
@@ -148,7 +151,7 @@ void AnnihilationOperator::applyTo(State& v, int hc, double)
 void LocalLower::applyTo(State& v, int hc, double)
 {
 #ifdef DEBUG_TRACE
-  std::cout << "LocalLower::applyTo entered." << endl;
+  std::cout << "LocalLower(freedom="<<getFreedom()<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
 #endif
   int i;
   int vSize = v.size();
@@ -175,7 +178,7 @@ void NumberOperator::applyTo(State& v, int hc, double)
   // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
 #ifdef DEBUG_TRACE
-  std::cout << "NumberOperator::applyTo entered." << endl;
+  std::cout << "NumberOperator(freedom="<<getFreedom()<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
 #endif
   int i;
   Complex center = v.centerCoords();
@@ -209,7 +212,7 @@ void XOperator::applyTo(State& v, int hc, double)
   // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
 #ifdef DEBUG_TRACE
-  std::cout << "XOperator::applyTo entered." << endl;
+  std::cout << "XOperator(freedom="<<getFreedom()<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
 #endif
   Complex center = v.centerCoords();
   int vSize = v.size();
@@ -248,7 +251,7 @@ void POperator::applyTo(State& v, int hc, double)
   // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
 #ifdef DEBUG_TRACE
-  std::cout << "XOperator::applyTo entered." << endl;
+  std::cout << "POperator(freedom="<<getFreedom()<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
 #endif
   Complex center = v.centerCoords();
   int vSize = v.size();
@@ -288,6 +291,9 @@ void POperator::applyTo(State& v, int hc, double)
 
 void DisplacementOperator::applyTo(State& v, int hc, double)
 {
+#ifdef DEBUG_TRACE
+  std::cout << "DisplacementOperator(freedom="<<getFreedom()<<", alpha="<<alpha<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
+#endif
   int i,j,k,n,m;
   Complex center = v.centerCoords();
   int vSize = v.size();
@@ -372,6 +378,9 @@ void DisplacementOperator::applyTo(State& v, int hc, double)
 
 void RealDisplacementOperator::applyTo(State& v, int hc, double)
 {
+#ifdef DEBUG_TRACE
+  std::cout << "RealDisplacementOperator(freedom="<<getFreedom()<<", alpha="<<alpha<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
+#endif
   int i,j,k,n,m;
   Complex center = v.centerCoords();
   int vSize = v.size();

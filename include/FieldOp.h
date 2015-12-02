@@ -40,10 +40,18 @@ class FieldTransitionOperator: public PrimaryOperator
 //  |i><j|  (Transition from |j> to |i>)
 {
 public:
-  FieldTransitionOperator() : PrimaryOperator(0,FIELD) { i=0; j=0; };
+  FieldTransitionOperator() : PrimaryOperator(0,FIELD) {
+    i=0; j=0;
+#ifdef DEBUG_TRACE
+    std::cout << "Instantiated FieldTransitionOperator(freedom=0, i=0, j=0)." << std::endl;
+#endif
+  };
   FieldTransitionOperator(int thei, int thej, int freedom=0) :
     PrimaryOperator(freedom,FIELD) {
       i=thei; j=thej;
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated FieldTransitionOperator(freedom="<<freedom<<", i="<<thei<<", j="<<thej<<")." << std::endl;
+#endif
   };
   virtual void applyTo(State&,int,double);
 private:
@@ -54,16 +62,32 @@ private:
 class AnnihilationOperator: public PrimaryOperator
 {
   public:
-    AnnihilationOperator() : PrimaryOperator(0,FIELD) {};
-    AnnihilationOperator(int freedom) : PrimaryOperator(freedom,FIELD) {};
+    AnnihilationOperator() : PrimaryOperator(0,FIELD) {
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated AnnihilationOperator(freedom=0)." << std::endl;
+#endif
+    };
+    AnnihilationOperator(int freedom) : PrimaryOperator(freedom,FIELD) {
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated AnnihilationOperator(freedom="<<freedom<<")." << std::endl;
+#endif
+    };
     virtual void applyTo(State&,int,double);
 };
 
 class LocalLower: public PrimaryOperator
 {
   public:
-    LocalLower() : PrimaryOperator(0,FIELD) {};
-    LocalLower(int freedom) : PrimaryOperator(freedom,FIELD) {};
+    LocalLower() : PrimaryOperator(0,FIELD) {
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated LocalLower(freedom=0)." << std::endl;
+#endif
+    };
+    LocalLower(int freedom) : PrimaryOperator(freedom,FIELD) {
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated LocalLower(freedom="<<freedom<<")." << std::endl;
+#endif
+    };
     virtual void applyTo(State&,int,double);
 };
 
@@ -79,24 +103,48 @@ class CreationOperator: public PrimaryOperator
 class NumberOperator: public PrimaryOperator
 {
   public:
-    NumberOperator() : PrimaryOperator(0,FIELD) {};
-    NumberOperator(int freedom) : PrimaryOperator(freedom,FIELD) {};
+    NumberOperator() : PrimaryOperator(0,FIELD) {
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated NumberOperator(freedom=0)." << std::endl;
+#endif
+    };
+    NumberOperator(int freedom) : PrimaryOperator(freedom,FIELD) {
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated NumberOperator(freedom="<<freedom<<")." << std::endl;
+#endif
+    };
     virtual void applyTo(State&,int,double);
 };
 
 class XOperator: public PrimaryOperator
 {
   public:
-    XOperator() : PrimaryOperator(0,FIELD) {};
-    XOperator(int freedom) : PrimaryOperator(freedom,FIELD) {};
+    XOperator() : PrimaryOperator(0,FIELD) {
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated XOperator(freedom=0)." << std::endl;
+#endif
+    };
+    XOperator(int freedom) : PrimaryOperator(freedom,FIELD) {
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated XOperator(freedom="<<freedom<<")." << std::endl;
+#endif
+    };
     virtual void applyTo(State&,int,double);
 };
 
 class POperator: public PrimaryOperator
 {
   public:
-    POperator() : PrimaryOperator(0,FIELD) {};
-    POperator(int freedom) : PrimaryOperator(freedom,FIELD) {};
+    POperator() : PrimaryOperator(0,FIELD) {
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated POperator(freedom=0)." << std::endl;
+#endif
+    };
+    POperator(int freedom) : PrimaryOperator(freedom,FIELD) {
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated POperator(freedom="<<freedom<<")." << std::endl;
+#endif
+    };
     virtual void applyTo(State&,int,double);
 };
 
@@ -108,10 +156,16 @@ class DisplacementOperator: public PrimaryOperator
   public:
     DisplacementOperator() : PrimaryOperator(0,FIELD) {
       alpha=1.0; matrixSize=0; matrix=0; vv=0;
+#ifdef DEBUG_TRACE
+      std::cout << "Instantiated DisplacementOperator(freedom=0, alpha=1.0)." << std::endl;
+#endif
     };
     DisplacementOperator(Complex theAlpha, int freedom=0)
       : PrimaryOperator(freedom,FIELD) {
         alpha=theAlpha; matrixSize=0; matrix=0; vv=0;
+#ifdef DEBUG_TRACE
+        std::cout << "Instantiated DisplacementOperator(freedom="<<freedom<<", alpha="<<theAlpha<<")." << std::endl;
+#endif
       };
     virtual void applyTo(State&,int,double);
   private:
@@ -129,10 +183,16 @@ class RealDisplacementOperator: public PrimaryOperator
   public:
     RealDisplacementOperator() : PrimaryOperator(0,FIELD) {
       alpha=1.0; matrixSize=0; matrix=0; vv=0;
+#ifdef DEBUG_TRACE
+      std::cout << "RealInstantiated DisplacementOperator(freedom=0, alpha=1.0)." << std::endl;
+#endif
     };
     RealDisplacementOperator(double theAlpha, int freedom=0)
       : PrimaryOperator(freedom,FIELD) {
         alpha=theAlpha; matrixSize=0; matrix=0; vv=0;
+#ifdef DEBUG_TRACE
+        std::cout << "Instantiated DisplacementOperator(freedom="<<freedom<<", alpha="<<theAlpha<<")." << std::endl;
+#endif
       };
     virtual void applyTo(State&,int,double);
   private:

@@ -299,7 +299,7 @@ State::State(int n, int* dimensions, FreedomType* forms) // Constructor for
   int i;             // ground state
 #ifndef OPTIMIZE_QSD
   if (n<1) error("Illegal number of freedoms in State constructor!");
-  if (n=1) error("Do not call this constructor for 1-freedom states!");
+  if (n==1) error("Do not call this constructor for 1-freedom states!");
 #endif
   nFreedoms = n;
   nDims = new int[n];      // allocate memory
@@ -929,6 +929,9 @@ std::istream& operator>>( std::istream& s, State& a )
 
 void State::apply(PrimaryOperator& theOp, int hc, int theFreedom, FreedomType theType, double t)
 {
+#ifdef DEBUG_TRACE
+  std::cout << "State::apply(theOp, hc="<<hc<<", theFreedom="<<theFreedom<<", FreedomType="<<theType<<", t="<<t<<") entered" << std::endl;
+#endif
   int i,j;
   if( nFreedoms == 1 ) {    // 1 freedom case
 #ifndef OPTIMIZE_QSD

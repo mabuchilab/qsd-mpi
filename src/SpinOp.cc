@@ -1,17 +1,17 @@
 //   SpinOp.cc -- Operators for a spin or two-level system.
-//     
+//
 //   Copyright (C) 1995  Todd Brun and Ruediger Schack
-//   
+//
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
 //   the Free Software Foundation; either version 2 of the License, or
 //   (at your option) any later version.
-//   
+//
 //   This program is distributed in the hope that it will be useful,
 //   but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//   
+//
 //   You should have received a copy of the GNU General Public License
 //   along with this program; if not, write to the Free Software
 //   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -42,6 +42,9 @@ void SigmaX::applyTo(State& v, int hc, double)
 //
 // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
+#ifdef DEBUG_TRACE
+  std::cout << "SigmaX(freedom="<<getFreedom()<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
+#endif
   Complex tmp = v[1];
   v[1] = v[0];
   v[0] = tmp;
@@ -51,6 +54,9 @@ void SigmaY::applyTo(State& v, int hc, double)
 //
 // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
+#ifdef DEBUG_TRACE
+  std::cout << "SigmaY(freedom="<<getFreedom()<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
+#endif
   Complex tmp = v[1];
   v[1] = v[0];
   v[1].timesMinusI();
@@ -62,11 +68,17 @@ void SigmaZ::applyTo(State& v, int hc, double)
 //
 // `hc=HC' and `hc=NO_HC' are identical for Hermitian operators.
 {
+#ifdef DEBUG_TRACE
+  std::cout << "SigmaZ(freedom="<<getFreedom()<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
+#endif
   v[0] *= -1;
 }
 
 void SigmaPlus::applyTo(State& v, int hc, double)
 {
+#ifdef DEBUG_TRACE
+  std::cout << "SigmaPlus(freedom="<<getFreedom()<<")::applyTo(v, hc="<<hc<<") entered." << std::endl;
+#endif
   switch( hc ) {
   case NO_HC:
     v[1] = v[0];
