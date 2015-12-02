@@ -19,6 +19,7 @@ PREFIX ?= $(HOME)/local
 # -O : optimization setting
 # you could add debug options like -g here
 FLAGS = -O2 -I$(QSD_DIR) -I$(INC)
+#FLAGS = -DDEBUG_TRACE -O0 -Wall -g -I$(QSD_DIR) -I$(INC)
 
 
 # The C++ compiler
