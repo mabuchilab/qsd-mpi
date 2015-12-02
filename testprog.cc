@@ -52,9 +52,9 @@ int main()
   int nOfMovingFreedoms = 2;
   double epsilon = 0.01;     // cutoff probability
   int nPad = 2;              // pad size
-  //ACG gen(38388389);            // random number generator with seed
-  //ComplexNormal rndm(&gen);     // Complex Gaussian random numbers
-  ComplexNormalTest rndm(899101); // Simple portable random number generator
+  ACG gen(38388389);            // random number generator with seed
+  ComplexNormal rndm(&gen);     // Complex Gaussian random numbers
+  //ComplexNormalTest rndm(899101); // Simple portable random number generator
   AdaptiveStep stepper(psiIni, H, nL, L);       // see paper Section 5
 // Output
   const int nOfOut = 3;
