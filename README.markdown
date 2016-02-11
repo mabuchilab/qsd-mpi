@@ -16,7 +16,7 @@ The further development of `qsd-mpi` has two long-term goals:
 *   Adapt QSD to serve as a numerical backend for the [QNET][] library
 
 
-[QSD]: https://www.ma.rhul.ac.uk/quantum-trajectories<Paste>
+[QSD]: https://www.ma.rhul.ac.uk/quantum-trajectories
 [paper]: http://arxiv.org/abs/quant-ph/9608004
 [QNET]: https://github.com/mabuchilab/QNET#qnet
 
